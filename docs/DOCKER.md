@@ -21,7 +21,7 @@ This application uses Docker Compose to orchestrate three services:
 
 1. **MongoDB** - Database service
 2. **Backend** - Express.js API server
-3. **Frontend** - TanStack Start React application
+3. **Frontend** - TanStack + Vite + React application
 
 ### Architecture
 

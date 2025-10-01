@@ -4,7 +4,7 @@
 
 A complete, production-ready MERN stack application featuring:
 
-- ✅ **TanStack Start** frontend with React 18
+- ✅ **Vite + React** frontend with React
 - ✅ **Express.js** REST API backend
 - ✅ **MongoDB** database with Mongoose ODM
 - ✅ **TanStack Router** for routing
@@ -23,7 +23,7 @@ A complete, production-ready MERN stack application featuring:
 - Environment-based configuration
 - Hot reload with nodemon
 
-### Frontend (TanStack Start)
+### Frontend (TanStack Query + Router)
 - 3 pages: Home, Todos List, Todo Detail
 - File-based routing with TanStack Router
 - Server state management with TanStack Query
@@ -159,7 +159,6 @@ All files are organized for easy type addition!
 3. **React Hooks** - useState, useQuery, useMutation
 4. **Server State** - TanStack Query caching and updates
 5. **Client Routing** - File-based TanStack Router
-6. **SSR** - Server-side rendering with TanStack Start
 7. **Error Handling** - Both frontend and backend
 8. **Data Validation** - Mongoose schemas and validators
 9. **CORS** - Cross-origin resource sharing

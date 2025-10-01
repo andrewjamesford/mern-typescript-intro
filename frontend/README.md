@@ -1,34 +1,14 @@
-# Frontend - TanStack Start Application
+# Frontend - Vite + React Application
 
-Modern React frontend built with TanStack Start, featuring server-side rendering, file-based routing, and powerful state management.
+Modern React frontend built with TanStack Router + Query, featuring server-side rendering, file-based routing, and powerful state management.
 
 ## 🚀 Technology Stack
 
-- **TanStack Start** - Full-stack React framework with SSR
 - **TanStack Router** - File-based routing with type safety
 - **TanStack Query** - Server state management and caching
 - **React 19** - UI library
-- **Vinxi** - Build tool and dev server
 
-## 📁 Project Structure
 
-```
-frontend/
-├── app/
-│   ├── routes/              # File-based routing
-│   │   ├── __root.jsx      # Root layout with navigation
-│   │   ├── index.jsx       # Home page (/)
-│   │   ├── todos.jsx       # Todos list (/todos)
-│   │   └── todos.$id.jsx   # Todo detail (/todos/:id)
-│   ├── api/
-│   │   └── todos.js        # API client functions
-│   ├── client.jsx          # Client-side entry point
-│   ├── ssr.jsx             # Server-side rendering entry
-│   ├── router.js           # Router configuration
-│   └── routeTree.gen.js    # Generated route tree
-├── app.config.js           # TanStack Start config
-└── package.json
-```
 
 ## 🛠️ Development
 
@@ -45,7 +25,6 @@ npm run dev
 
 The development server will start on http://localhost:3000 with:
 - Hot Module Replacement (HMR)
-- Server-Side Rendering (SSR)
 - Fast refresh
 
 ### Build for Production
@@ -246,7 +225,6 @@ Use browser DevTools Network tab to:
 ## 📚 Learn More
 
 ### TanStack Documentation
-- [TanStack Start](https://tanstack.com/start/latest)
 - [TanStack Router](https://tanstack.com/router/latest)
 - [TanStack Query](https://tanstack.com/query/latest)
 

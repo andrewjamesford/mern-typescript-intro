@@ -220,7 +220,7 @@ curl -X POST http://localhost:5001/api/todos \
 
 | Service | URL | Purpose |
 |---------|-----|---------|
-| Frontend | http://localhost:3000 | React UI (TanStack Start) |
+| Frontend | http://localhost:3000 | React UI (TanStack Query + Router) |
 | Backend API | http://localhost:5001 | Express.js REST API |
 | MongoDB | mongodb://localhost:27017 | Database |
 

@@ -51,16 +51,11 @@ mern-tanstack-app/
 │   ├── controllers/          Business logic
 │   └── routes/               API endpoints
 │
-└── 📁 frontend/               ⚛️ TanStack Start Frontend
+└── 📁 frontend/               ⚛️ TanStack Frontend
     ├── 📘 README.md          Frontend documentation
     ├── 📄 package.json       Dependencies
     ├── 📄 app.config.js      TanStack config
-    └── app/
-        ├── api/todos.js      API client
-        ├── routes/           Page components
-        ├── client.jsx        Browser entry
-        ├── ssr.jsx           Server entry
-        └── router.js         Router config
+    └── app.jsx
 ```
 
 ## 🎯 Quick Navigation
@@ -176,7 +171,6 @@ See [SUMMARY.md - Features](./SUMMARY.md#features-showcase) for details.
 ## 🔧 Tech Stack
 
 ### Frontend
-- TanStack Start 1.87.0
 - TanStack Router 1.87.0
 - TanStack Query 5.62.8
 - React 18.3.1

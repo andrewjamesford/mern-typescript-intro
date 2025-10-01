@@ -1,4 +1,4 @@
-# MERN TanStack Start Todo Application
+# MERN TanStack Todo Application
 
 A modern full-stack MERN application demonstrating best practices with Vite, React, Express.js REST API, and MongoDB database. Features Docker-first deployment, TypeScript-ready architecture, and comprehensive documentation.
 

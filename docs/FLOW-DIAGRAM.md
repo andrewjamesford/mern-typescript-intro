@@ -24,7 +24,7 @@
                                │ HTTP Requests (fetch API)
                                │
 ┌──────────────────────────────▼──────────────────────────────────────┐
-│                     FRONTEND (TanStack Start)                        │
+│                     FRONTEND (TanStack + Vite + React)                        │
 │  Port: 3000                                                          │
 │  ┌───────────────────────────────────────────────────────────────┐ │
 │  │                    TanStack Query Layer                        │ │
@@ -297,22 +297,14 @@ Background Refetch (after 60 seconds):
 
 ### Frontend Startup (npm run dev)
 ```
-1. Vinxi dev server starts
-2. Loads app.config.js → TanStack Start config
-3. Builds app/ssr.jsx for server
-4. Builds app/client.jsx for browser
-5. Loads app/router.js → Creates router instance
-6. Loads app/routeTree.gen.js → Route structure
-7. Loads all route files:
-   - app/routes/__root.jsx
-   - app/routes/index.jsx
-   - app/routes/todos.jsx
-   - app/routes/todos.$id.jsx
-8. Server renders initial HTML
-9. Sends to browser
-10. Browser hydrates React app
-11. TanStack Router takes over navigation
-12. Ready for user interaction
+1. Vite dev server starts
+2. Loads app.config.js
+3. Builds app
+4. Server renders initial HTML
+5. Sends to browser
+6. Browser hydrates React app
+7. TanStack Router takes over navigation
+8. Ready for user interaction
 ```
 
 ## Key Benefits of This Architecture
@@ -320,7 +312,6 @@ Background Refetch (after 60 seconds):
 1. **Separation of Concerns**: Frontend, backend, and database are independent
 2. **Type Safety**: Can easily add TypeScript across all layers
 3. **Caching**: TanStack Query handles all caching automatically
-4. **SSR**: TanStack Start provides server-side rendering
 5. **Developer Experience**: Hot reload on both frontend and backend
 6. **Scalability**: Each layer can be scaled independently
 7. **Maintainability**: Clear folder structure and separation

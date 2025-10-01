@@ -22,21 +22,12 @@
 - ✅ routes/todoRoutes.js - API routes
 - ✅ package.json - Dependencies
 
-### ⚛️ Frontend Code (9 files)
-- ✅ app.config.js - TanStack Start config
-- ✅ app/client.jsx - Client entry
-- ✅ app/ssr.jsx - Server entry
+### ⚛️ Frontend Code 
+- ✅ vite.config.js - Vite config
 - ✅ app/router.js - Router configuration
-- ✅ app/routeTree.gen.js - Route tree
-- ✅ app/api/todos.js - API client
-- ✅ app/routes/__root.jsx - Root layout
-- ✅ app/routes/index.jsx - Home page
-- ✅ app/routes/todos.jsx - Todos list
-- ✅ app/routes/todos.$id.jsx - Todo detail
 - ✅ package.json - Dependencies
 
 ### 🔧 Configuration Files (6 files)
-- ✅ setup.sh - Installation script
 - ✅ .gitignore (root)
 - ✅ backend/.env - Environment variables
 - ✅ backend/.gitignore
@@ -66,8 +57,7 @@
 - ✅ Proper MVC structure
 
 ### Frontend Features
-- ✅ TanStack Start framework
-- ✅ Server-side rendering (SSR)
+- ✅ TanStack Router
 - ✅ File-based routing
 - ✅ TanStack Query for state
 - ✅ Automatic caching
@@ -156,7 +146,6 @@ This package is perfect for:
 ## 🎨 Technologies Included
 
 ### Frontend Stack
-- ✅ TanStack Start 1.87.0
 - ✅ TanStack Router 1.87.0
 - ✅ TanStack Query 5.62.8
 - ✅ React 18.3.1
