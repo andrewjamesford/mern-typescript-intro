@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep:*)",
+      "Bash(tree:*)",
+      "Bash(git init:*)",
+      "Bash(docker-compose up:*)",
+      "Bash(docker logs:*)",
+      "Bash(docker-compose:*)",
+      "Bash(npm install:*)",
+      "Bash(npm:*)",
+      "Bash(curl:*)",
+      "WebSearch",
+      "WebFetch(domain:github.com)",
+      "Bash(cat:*)",
+      "Bash(./node_modules/.bin/vinxi:*)",
+      "WebFetch(domain:raw.githubusercontent.com)",
+      "Bash(timeout 10 npm run dev)",
+      "WebFetch(domain:tanstack.com)",
+      "Bash(npx @tanstack/react-start:*)",
+      "Bash(pkill:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
