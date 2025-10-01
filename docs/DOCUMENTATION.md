@@ -3,11 +3,12 @@
 ## Overview
 
 This is a full-stack MERN application featuring:
-- **Frontend**: TanStack Start (React framework)
+- **Frontend**: React 19 with Vite
 - **Backend**: Express.js REST API
 - **Database**: MongoDB with Mongoose
 - **State Management**: TanStack Query
 - **Routing**: TanStack Router
+- **Build Tool**: Vite
 
 ## Architecture
 
@@ -15,10 +16,11 @@ This is a full-stack MERN application featuring:
 ┌─────────────────────────────────────────────────────┐
 │                   Browser/Client                     │
 │  ┌─────────────────────────────────────────────┐   │
-│  │        TanStack Start Frontend              │   │
+│  │        React 19 + Vite Frontend             │   │
 │  │  - React Components                         │   │
 │  │  - TanStack Router (Routing)               │   │
 │  │  - TanStack Query (State Management)       │   │
+│  │  - Vite (Build Tool & Dev Server)         │   │
 │  └─────────────────────────────────────────────┘   │
 └────────────────────┬───────────────────────────────┘
                      │ HTTP Requests
@@ -48,24 +50,18 @@ This is a full-stack MERN application featuring:
 ## Project Structure
 
 ```
-mern-tanstack-app/
-├── frontend/                    # React frontend
-│   ├── app/
-│   │   ├── api/
-│   │   │   └── todos.js        # API client
-│   │   ├── routes/
-│   │   │   ├── __root.jsx      # Root layout
-│   │   │   ├── index.jsx       # Home page
-│   │   │   ├── todos.jsx       # Todos list
-│   │   │   └── todos.$id.jsx   # Todo detail
-│   │   ├── client.jsx          # Client entry
-│   │   ├── router.js           # Router config
-│   │   ├── routeTree.gen.js    # Generated routes
-│   │   └── ssr.jsx             # SSR entry
-│   ├── app.config.js           # TanStack config
-│   └── package.json
+mern-typescript-intro/
+├── frontend/                    
+│   ├── src/
+│   │   ├── App.jsx          
+│   │   ├── main.jsx
+│   │   └── Todos.jsx
+│   ├── vite.config.js           
+│   ├── Dockerfile              # Frontend Docker image
+│   ├── package.json
+│   └── README.md
 │
-├── backend/                     # Express backend
+├── backend/                     # Express.js backend
 │   ├── config/
 │   │   └── db.js               # MongoDB connection
 │   ├── controllers/
@@ -76,20 +72,38 @@ mern-tanstack-app/
 │   │   └── todoRoutes.js       # API routes
 │   ├── server.js               # Express app
 │   ├── .env                    # Environment vars
-│   └── package.json
+│   ├── Dockerfile              # Backend Docker image
+│   ├── package.json
+│   └── README.md
 │
-├── README.md
-└── setup.sh                     # Setup script
+├── docs/                        # Documentation
+│   ├── INDEX.md                # Documentation index
+│   ├── QUICKSTART.md           # Setup guide
+│   ├── API.md                  # API reference
+│   ├── DOCKER.md               # Docker guide
+│   ├── SUMMARY.md              # Project overview
+│   ├── DOCUMENTATION.md        # This file
+│   ├── FLOW-DIAGRAM.md         # Data flow diagrams
+│   ├── PROJECT-STRUCTURE.md    # File structure
+│   └── MANIFEST.md             # Package contents
+│
+├── db/                          # Database directory
+│   └── README.md
+│
+├── README.md                    # Main documentation
+├── CLAUDE.md                    # Claude Code instructions
+├── docker-compose.yml           # Docker orchestration
+├── .gitignore
+└── .mcp.json                    # MCP configuration
 ```
 
 ## Technology Stack
 
 ### Frontend
-- **React 18**: UI library
-- **TanStack Start**: Full-stack React framework
-- **TanStack Router**: Type-safe routing
-- **TanStack Query**: Server state management
-- **Vinxi**: Build tool
+- **React 19**: Modern UI library
+- **Vite**: Fast build tool and dev server with HMR
+- **TanStack Router**: Type-safe, file-based routing
+- **TanStack Query**: Powerful server state management with caching
 
 ### Backend
 - **Node.js**: Runtime environment
@@ -111,10 +125,10 @@ mern-tanstack-app/
 - Loading and error states
 
 ### TanStack Router Features
-- File-based routing
+- Client-side routing
 - Type-safe navigation
-- Nested layouts
-- Route parameters
+- Route parameters and dynamic routes
+- Programmatic navigation
 - Active link detection
 
 ### API Features
@@ -160,12 +174,12 @@ NODE_ENV=development
 ```
 
 ### Frontend
-API URL is hardcoded in `frontend/app/api/todos.js`:
+API URL is configured in `frontend/src/` files:
 ```javascript
 const API_URL = 'http://localhost:5000/api';
 ```
 
-For production, use environment variables.
+For production, use Vite environment variables (`.env` files with `VITE_` prefix).
 
 ## Database Schema
 
@@ -243,9 +257,9 @@ Error:
 - Test with API client or frontend
 
 **Frontend Changes:**
-- Hot Module Replacement (HMR) updates instantly
+- Vite Hot Module Replacement (HMR) updates instantly
 - Check browser console for errors
-- TanStack Query DevTools available
+- React DevTools and TanStack Query DevTools available
 
 ## Common Tasks
 
@@ -253,29 +267,30 @@ Error:
 
 1. Update Mongoose schema (`backend/models/Todo.js`)
 2. Update API types (if using TypeScript)
-3. Update form in `frontend/app/routes/todos.jsx`
+3. Update form in `frontend/src/` components
 4. Update display in components
 
 ### Adding a New Route
 
-1. Create route file in `frontend/app/routes/`
-2. Update `frontend/app/routeTree.gen.js`
-3. Router automatically picks up new route
+1. Configure route in TanStack Router setup
+2. Create new component in `frontend/src/`
+3. Update router configuration with new route
 
 ### Adding a New API Endpoint
 
 1. Add controller function in `backend/controllers/`
 2. Add route in `backend/routes/`
-3. Create API function in `frontend/app/api/todos.js`
-4. Use in components with TanStack Query
+3. Create API function in frontend API client
+4. Use in components with TanStack Query hooks
 
 ## Deployment Considerations
 
 ### Frontend
-- Build: `npm run build`
-- Serves static files and SSR
-- Update API_URL for production backend
-- Deploy to Vercel, Netlify, or similar
+- Build: `npm run build` (creates optimized production bundle)
+- Serves static files (SPA - Single Page Application)
+- Update API_URL for production backend using Vite env vars
+- Deploy to Vercel, Netlify, Cloudflare Pages, or similar
+- Vite builds highly optimized assets with code splitting
 
 ### Backend
 - Use production MongoDB (MongoDB Atlas)
@@ -307,9 +322,10 @@ Error:
 - Check network tab for API calls
 
 ### Routes Not Working
-- Ensure routeTree.gen.js is updated
-- Check route file names match pattern
-- Verify router configuration
+- Check TanStack Router configuration
+- Verify route definitions
+- Clear browser cache
+- Check console for routing errors
 
 ## Best Practices
 
