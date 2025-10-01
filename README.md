@@ -5,7 +5,7 @@ A full-stack MERN application built with TypeScript, using Vite + React for the 
 ## Project Structure
 
 ```
-mern-typescript-intro-typescript/
+mern-typescript-intro/
 ├── frontend/          # Vite + React + TypeScript application
 ├── backend/           # Express.js + TypeScript API server
 ├── db/                # Database storage
@@ -115,11 +115,11 @@ The application will be available at:
 - React 19
 - TypeScript 5.9
 - Vite 7
-- TanStack Router 1.132
-- TanStack Query 5.90
+- TanStack Router 
+- TanStack Query 5
 
 ### Backend
-- Express.js 4.18
+- Express.js 
 - TypeScript 5.9
 - MongoDB
 - Mongoose 8.0
