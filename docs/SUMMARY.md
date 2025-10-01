@@ -10,7 +10,6 @@ A complete, production-ready MERN stack application featuring:
 - ✅ **TanStack Router** for routing
 - ✅ **TanStack Query** for state management
 - ✅ Full **CRUD operations** for todos
-- ✅ **Server-side rendering** (SSR)
 - ✅ Clean, modern UI with responsive design
 - ✅ Comprehensive documentation
 
@@ -49,7 +48,7 @@ Todo {
 ## 🚀 Getting Started
 
 ### Prerequisites
-- Node.js v18+
+- Node.js v22+
 - MongoDB installed
 - npm or yarn
 
@@ -113,18 +112,16 @@ Visit: http://localhost:3000
 ## 🔧 Tech Stack Details
 
 ### Frontend Stack
-- **TanStack Start 1.87.0** - Full-stack React framework
-- **TanStack Router 1.87.0** - Type-safe routing
-- **TanStack Query 5.62.8** - Server state management
-- **React 18.3.1** - UI library
-- **Vinxi 0.4.3** - Build tool
+- **TanStack Router** - Type-safe routing
+- **TanStack Query** - Server state management
+- **React 19** - UI library
 
 ### Backend Stack
-- **Express 4.18.2** - Web framework
-- **Mongoose 8.0.0** - MongoDB ODM
-- **CORS 2.8.5** - Cross-origin support
-- **dotenv 16.3.1** - Environment config
-- **nodemon 3.0.1** - Development auto-reload
+- **Express** - Web framework
+- **Mongoose** - MongoDB ODM
+- **CORS** - Cross-origin support
+- **dotenv** - Environment config
+- **nodemon** - Development auto-reload
 
 ## 🎓 Perfect for Learning
 

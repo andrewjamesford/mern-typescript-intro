@@ -4,26 +4,30 @@ Welcome! This is your complete MERN stack application with comprehensive documen
 
 ## 🚀 Start Here
 
-**New to the project?** Follow this order:
+**New to the project?** Follow this recommended order:
 
-1. **[SUMMARY.md](./SUMMARY.md)** ⭐ **START HERE** - Quick overview of everything
-2. **[QUICKSTART.md](./QUICKSTART.md)** - Get running in 5 minutes
+1. **[QUICKSTART.md](./QUICKSTART.md)** ⭐ **START HERE** - Get running in 5 minutes
+2. **[SUMMARY.md](./SUMMARY.md)** - Quick overview of everything
 3. **[PROJECT-STRUCTURE.md](./PROJECT-STRUCTURE.md)** - Understand the file organization
-4. **[FLOW-DIAGRAM.md](./FLOW-DIAGRAM.md)** - See how data flows through the app
-5. **[DOCUMENTATION.md](./DOCUMENTATION.md)** - Deep dive into architecture
+4. **[API.md](./API.md)** - Learn the API endpoints
+5. **[FLOW-DIAGRAM.md](./FLOW-DIAGRAM.md)** - See how data flows through the app
+6. **[DOCUMENTATION.md](./DOCUMENTATION.md)** - Deep dive into architecture
 
 ## 📖 Documentation Files
 
 | File | Purpose | When to Read |
 |------|---------|--------------|
-| **SUMMARY.md** | Project overview, features, quick stats | First time setup |
-| **QUICKSTART.md** | Step-by-step setup instructions | Before running the app |
-| **README.md** | High-level project description | For GitHub/sharing |
-| **PROJECT-STRUCTURE.md** | File organization and structure | When exploring code |
-| **FLOW-DIAGRAM.md** | Visual data flow and architecture | Understanding how it works |
-| **DOCUMENTATION.md** | Complete technical documentation | Deep learning/reference |
-| **backend/README.md** | Backend API documentation | Working on backend |
-| **frontend/README.md** | Frontend architecture | Working on frontend |
+| **[QUICKSTART.md](QUICKSTART.md)** | Step-by-step setup instructions (Docker + Local) | ⭐ First time setup |
+| **[SUMMARY.md](SUMMARY.md)** | Project overview, features, quick stats | Understanding the project |
+| **[API.md](API.md)** | Complete API reference with examples | Working with the API |
+| **[DOCKER.md](DOCKER.md)** | Docker setup, commands, troubleshooting | Using Docker |
+| **[PROJECT-STRUCTURE.md](PROJECT-STRUCTURE.md)** | File organization and structure | Exploring the codebase |
+| **[FLOW-DIAGRAM.md](FLOW-DIAGRAM.md)** | Visual data flow and architecture | Understanding how it works |
+| **[DOCUMENTATION.md](DOCUMENTATION.md)** | Complete technical documentation | Deep learning/reference |
+| **[MANIFEST.md](MANIFEST.md)** | Package contents checklist | Verification |
+| **[../README.md](../README.md)** | Main project README | GitHub/sharing |
+| **[../backend/README.md](../backend/README.md)** | Backend API documentation | Working on backend |
+| **[../frontend/README.md](../frontend/README.md)** | Frontend architecture | Working on frontend |
 
 ## 🗂️ Project Structure
 
@@ -62,28 +66,43 @@ mern-tanstack-app/
 ## 🎯 Quick Navigation
 
 ### Setup & Running
-- [Installation Instructions](./QUICKSTART.md#installation)
-- [Starting MongoDB](./QUICKSTART.md#starting-mongodb)
-- [Running Backend](./QUICKSTART.md#terminal-1---backend)
-- [Running Frontend](./QUICKSTART.md#terminal-2---frontend)
-- [Troubleshooting](./QUICKSTART.md#troubleshooting)
+- [Docker Setup](./QUICKSTART.md#docker-setup) - Recommended for quickest start
+- [Local Development Setup](./QUICKSTART.md#local-development-setup) - For local development
+- [Installation Instructions](./QUICKSTART.md#installation-steps)
+- [Testing the Application](./QUICKSTART.md#testing-the-application)
+- [Troubleshooting](./QUICKSTART.md#common-issues)
 
 ### Understanding the Code
 - [Project Overview](./SUMMARY.md#what-you-have)
 - [File Structure](./PROJECT-STRUCTURE.md)
 - [Data Flow](./FLOW-DIAGRAM.md)
 - [Architecture](./DOCUMENTATION.md#architecture)
-- [API Endpoints](./backend/README.md#api-endpoints)
+- [API Endpoints](./API.md#endpoints)
 
 ### Development
-- [Backend Setup](./backend/README.md#setup)
-- [Frontend Setup](./frontend/README.md#setup)
+- [Docker Commands](./DOCKER.md#common-commands)
+- [Development Workflow](./DOCKER.md#development-workflow)
+- [Backend Setup](../backend/README.md#setup)
+- [Frontend Setup](../frontend/README.md)
 - [Environment Config](./DOCUMENTATION.md#environment-configuration)
 - [Common Tasks](./DOCUMENTATION.md#common-tasks)
 
+### API Reference
+- [All Endpoints](./API.md#endpoints)
+- [Request/Response Format](./API.md#response-format)
+- [Data Model](./API.md#data-model)
+- [Error Handling](./API.md#error-handling)
+- [Testing with curl](./API.md#testing-with-curl)
+
+### Docker
+- [Quick Start](./DOCKER.md#quick-start)
+- [Common Commands](./DOCKER.md#common-commands)
+- [Troubleshooting](./DOCKER.md#troubleshooting)
+- [Production Deployment](./DOCKER.md#production-deployment)
+
 ### Reference
 - [Tech Stack Details](./SUMMARY.md#tech-stack-details)
-- [Database Schema](./backend/README.md#todo-schema)
+- [Database Schema](./API.md#data-model)
 - [Key Concepts](./SUMMARY.md#key-concepts-demonstrated)
 - [Best Practices](./DOCUMENTATION.md#best-practices)
 
@@ -110,7 +129,10 @@ mern-tanstack-app/
 ## 💡 Common Questions
 
 **Q: Where do I start?**
-→ Read [SUMMARY.md](./SUMMARY.md), then follow [QUICKSTART.md](./QUICKSTART.md)
+→ Follow [QUICKSTART.md](./QUICKSTART.md) - 5 minute setup guide
+
+**Q: Should I use Docker or local setup?**
+→ Docker is recommended for easiest start. See [DOCKER.md](./DOCKER.md)
 
 **Q: How do I add a new feature?**
 → See [DOCUMENTATION.md - Common Tasks](./DOCUMENTATION.md#common-tasks)
@@ -118,21 +140,25 @@ mern-tanstack-app/
 **Q: How does the data flow work?**
 → Check [FLOW-DIAGRAM.md](./FLOW-DIAGRAM.md)
 
-**Q: What's the API structure?**
-→ See [backend/README.md](./backend/README.md)
+**Q: What are all the API endpoints?**
+→ See [API.md](./API.md)
+
+**Q: How do I use Docker commands?**
+→ See [DOCKER.md - Common Commands](./DOCKER.md#common-commands)
 
 **Q: How do I convert to TypeScript?**
 → See [SUMMARY.md - Conversion to TypeScript](./SUMMARY.md#conversion-to-typescript)
 
 **Q: Something's not working!**
-→ Check [QUICKSTART.md - Troubleshooting](./QUICKSTART.md#troubleshooting)
+→ Check [QUICKSTART.md - Troubleshooting](./QUICKSTART.md#common-issues) or [DOCKER.md - Troubleshooting](./DOCKER.md#troubleshooting)
 
 ## 📝 Code Examples
 
 Find code examples in:
+- [API.md](./API.md) - Complete API request/response examples
 - [FLOW-DIAGRAM.md](./FLOW-DIAGRAM.md) - Step-by-step execution flow
-- [backend/README.md](./backend/README.md) - API request/response examples
 - [DOCUMENTATION.md](./DOCUMENTATION.md) - Architecture patterns
+- [DOCKER.md](./DOCKER.md) - Docker commands and workflows
 
 ## 🎨 Application Features
 
