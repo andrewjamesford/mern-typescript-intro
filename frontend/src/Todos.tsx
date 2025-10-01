@@ -1,146 +1,170 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { useState, useEffect, ChangeEvent, FormEvent } from 'react'
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useState, useEffect, ChangeEvent, FormEvent } from "react";
 
-const API_URL = 'http://localhost:5001/api'
+const API_URL = "http://localhost:5001/api";
 
-type Priority = 'low' | 'medium' | 'high'
+type Priority = "low" | "medium" | "high";
 
 interface Todo {
-  _id: string
-  title: string
-  description?: string
-  completed: boolean
-  priority: Priority
-  createdAt: string
-  updatedAt: string
-  dueDate?: string
+  _id: string;
+  title: string;
+  description?: string;
+  completed: boolean;
+  priority: Priority;
+  createdAt: string;
+  updatedAt: string;
+  dueDate?: string;
 }
 
 interface NewTodo {
-  title: string
-  description?: string
-  priority: Priority
+  title: string;
+  description?: string;
+  priority: Priority;
 }
 
 interface TodoApiResponse {
-  success: boolean
-  data: Todo | Todo[]
-  count?: number
+  success: boolean;
+  data: Todo | Todo[];
+  count?: number;
 }
 
 interface UpdateTodoParams extends Partial<Todo> {
-  id: string
+  id: string;
 }
 
 const todoApi = {
   getTodos: async (): Promise<Todo[]> => {
-    const response = await fetch(`${API_URL}/todos`)
-    if (!response.ok) throw new Error('Failed to fetch todos')
-    const data: TodoApiResponse = await response.json()
-    return data.data as Todo[]
+    const response = await fetch(`${API_URL}/todos`);
+    if (!response.ok) throw new Error("Failed to fetch todos");
+    const data: TodoApiResponse = await response.json();
+    return data.data as Todo[];
   },
   createTodo: async (todo: NewTodo): Promise<Todo> => {
     const response = await fetch(`${API_URL}/todos`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(todo),
-    })
-    if (!response.ok) throw new Error('Failed to create todo')
-    const data: TodoApiResponse = await response.json()
-    return data.data as Todo
+    });
+    if (!response.ok) throw new Error("Failed to create todo");
+    const data: TodoApiResponse = await response.json();
+    return data.data as Todo;
   },
   updateTodo: async ({ id, ...todo }: UpdateTodoParams): Promise<Todo> => {
     const response = await fetch(`${API_URL}/todos/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(todo),
-    })
-    if (!response.ok) throw new Error('Failed to update todo')
-    const data: TodoApiResponse = await response.json()
-    return data.data as Todo
+    });
+    if (!response.ok) throw new Error("Failed to update todo");
+    const data: TodoApiResponse = await response.json();
+    return data.data as Todo;
   },
   deleteTodo: async (id: string): Promise<boolean> => {
     const response = await fetch(`${API_URL}/todos/${id}`, {
-      method: 'DELETE',
-    })
-    if (!response.ok) throw new Error('Failed to delete todo')
-    return true
+      method: "DELETE",
+    });
+    if (!response.ok) throw new Error("Failed to delete todo");
+    return true;
   },
-}
+};
 
 function Todos() {
-  const queryClient = useQueryClient()
-  const [newTodo, setNewTodo] = useState<NewTodo>({ title: '', description: '', priority: 'medium' })
-  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768)
+  const queryClient = useQueryClient();
+  const [newTodo, setNewTodo] = useState<NewTodo>({
+    title: "",
+    description: "",
+    priority: "medium",
+  });
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768);
 
   useEffect(() => {
-    const handleResize = (): void => setIsMobile(window.innerWidth < 768)
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-  }, [])
+    const handleResize = (): void => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-  const { data: todos = [], isLoading, error } = useQuery<Todo[]>({
-    queryKey: ['todos'],
+  const {
+    data: todos = [],
+    isLoading,
+    error,
+  } = useQuery<Todo[]>({
+    queryKey: ["todos"],
     queryFn: todoApi.getTodos,
-  })
+  });
 
   const createMutation = useMutation({
     mutationFn: todoApi.createTodo,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['todos'] })
-      setNewTodo({ title: '', description: '', priority: 'medium' })
+      queryClient.invalidateQueries({ queryKey: ["todos"] });
+      setNewTodo({ title: "", description: "", priority: "medium" });
     },
-  })
+  });
 
   const updateMutation = useMutation({
     mutationFn: todoApi.updateTodo,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
-  })
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["todos"] }),
+  });
 
   const deleteMutation = useMutation({
     mutationFn: todoApi.deleteTodo,
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
-  })
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: ["todos"] }),
+  });
 
   const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
-    e.preventDefault()
-    if (newTodo.title.trim()) createMutation.mutate(newTodo)
-  }
+    e.preventDefault();
+    if (newTodo.title.trim()) createMutation.mutate(newTodo);
+  };
 
   const handleTitleChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    setNewTodo({ ...newTodo, title: e.target.value })
-  }
+    setNewTodo({ ...newTodo, title: e.target.value });
+  };
 
-  const handleDescriptionChange = (e: ChangeEvent<HTMLTextAreaElement>): void => {
-    setNewTodo({ ...newTodo, description: e.target.value })
-  }
+  const handleDescriptionChange = (
+    e: ChangeEvent<HTMLTextAreaElement>,
+  ): void => {
+    setNewTodo({ ...newTodo, description: e.target.value });
+  };
 
   const handlePriorityChange = (e: ChangeEvent<HTMLSelectElement>): void => {
-    setNewTodo({ ...newTodo, priority: e.target.value as Priority })
-  }
+    setNewTodo({ ...newTodo, priority: e.target.value as Priority });
+  };
 
   const handleToggleComplete = (todo: Todo): void => {
-    updateMutation.mutate({ ...todo, id: todo._id, completed: !todo.completed })
-  }
+    updateMutation.mutate({
+      ...todo,
+      id: todo._id,
+      completed: !todo.completed,
+    });
+  };
 
   const handleDelete = (id: string): void => {
-    deleteMutation.mutate(id)
-  }
+    deleteMutation.mutate(id);
+  };
 
-  if (isLoading) return <div style={{ textAlign: 'center', padding: '50px', color: '#667eea' }}>Loading todos...</div>
-  if (error) return <div style={{ textAlign: 'center', padding: '50px', color: '#e74c3c' }}>Error: {(error as Error).message}</div>
+  if (isLoading)
+    return (
+      <div style={{ textAlign: "center", padding: "50px", color: "#667eea" }}>
+        Loading todos...
+      </div>
+    );
+  if (error)
+    return (
+      <div style={{ textAlign: "center", padding: "50px", color: "#e74c3c" }}>
+        Error: {(error as Error).message}
+      </div>
+    );
 
   return (
     <div>
-      <h2 style={{ marginBottom: '30px' }}>My Todos</h2>
+      <h2 style={{ marginBottom: "30px" }}>My Todos</h2>
 
       <form
         onSubmit={handleSubmit}
         style={{
-          background: '#f7f7f7',
-          padding: isMobile ? '15px' : '25px',
-          borderRadius: '10px',
-          marginBottom: isMobile ? '20px' : '30px'
+          background: "#f7f7f7",
+          padding: isMobile ? "15px" : "25px",
+          borderRadius: "10px",
+          marginBottom: isMobile ? "20px" : "30px",
         }}
       >
         <input
@@ -149,48 +173,50 @@ function Todos() {
           value={newTodo.title}
           onChange={handleTitleChange}
           style={{
-            width: '100%',
-            padding: isMobile ? '10px' : '12px',
-            fontSize: isMobile ? '0.9rem' : '1rem',
-            border: '2px solid #ddd',
-            borderRadius: '6px',
-            marginBottom: '15px',
-            boxSizing: 'border-box'
+            width: "100%",
+            padding: isMobile ? "10px" : "12px",
+            fontSize: isMobile ? "0.9rem" : "1rem",
+            border: "2px solid #ddd",
+            borderRadius: "6px",
+            marginBottom: "15px",
+            boxSizing: "border-box",
           }}
           required
         />
         <textarea
           placeholder="Description (optional)..."
-          value={newTodo.description || ''}
+          value={newTodo.description || ""}
           onChange={handleDescriptionChange}
           style={{
-            width: '100%',
-            padding: isMobile ? '10px' : '12px',
-            fontSize: isMobile ? '0.9rem' : '1rem',
-            border: '2px solid #ddd',
-            borderRadius: '6px',
-            marginBottom: '15px',
-            fontFamily: 'inherit',
-            boxSizing: 'border-box'
+            width: "100%",
+            padding: isMobile ? "10px" : "12px",
+            fontSize: isMobile ? "0.9rem" : "1rem",
+            border: "2px solid #ddd",
+            borderRadius: "6px",
+            marginBottom: "15px",
+            fontFamily: "inherit",
+            boxSizing: "border-box",
           }}
           rows={isMobile ? 2 : 3}
         />
-        <div style={{
-          display: 'flex',
-          gap: isMobile ? '10px' : '15px',
-          alignItems: 'center',
-          flexWrap: 'wrap'
-        }}>
+        <div
+          style={{
+            display: "flex",
+            gap: isMobile ? "10px" : "15px",
+            alignItems: "center",
+            flexWrap: "wrap",
+          }}
+        >
           <select
             value={newTodo.priority}
             onChange={handlePriorityChange}
             style={{
-              flex: isMobile ? '1 1 100%' : '1',
-              padding: isMobile ? '10px' : '12px',
-              fontSize: isMobile ? '0.9rem' : '1rem',
-              border: '2px solid #ddd',
-              borderRadius: '6px',
-              boxSizing: 'border-box'
+              flex: isMobile ? "1 1 100%" : "1",
+              padding: isMobile ? "10px" : "12px",
+              fontSize: isMobile ? "0.9rem" : "1rem",
+              border: "2px solid #ddd",
+              borderRadius: "6px",
+              boxSizing: "border-box",
             }}
           >
             <option value="low">Low Priority</option>
@@ -201,103 +227,135 @@ function Todos() {
             type="submit"
             disabled={createMutation.isPending}
             style={{
-              flex: isMobile ? '1 1 100%' : '0 0 auto',
-              padding: isMobile ? '12px 20px' : '12px 30px',
-              fontSize: isMobile ? '0.9rem' : '1rem',
-              fontWeight: 'bold',
-              color: 'white',
-              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
-              border: 'none',
-              borderRadius: '6px',
-              cursor: 'pointer',
-              minHeight: '44px'
+              flex: isMobile ? "1 1 100%" : "0 0 auto",
+              padding: isMobile ? "12px 20px" : "12px 30px",
+              fontSize: isMobile ? "0.9rem" : "1rem",
+              fontWeight: "bold",
+              color: "white",
+              background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+              border: "none",
+              borderRadius: "6px",
+              cursor: "pointer",
+              minHeight: "44px",
             }}
           >
-            {createMutation.isPending ? 'Adding...' : 'Add Todo'}
+            {createMutation.isPending ? "Adding..." : "Add Todo"}
           </button>
         </div>
       </form>
 
-      <div style={{
-        display: 'flex',
-        flexDirection: 'column',
-        gap: isMobile ? '10px' : '15px'
-      }}>
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: isMobile ? "10px" : "15px",
+        }}
+      >
         {todos.length === 0 ? (
-          <p style={{
-            textAlign: 'center',
-            color: '#999',
-            padding: isMobile ? '30px' : '50px'
-          }}>No todos yet. Create one above!</p>
+          <p
+            style={{
+              textAlign: "center",
+              color: "#999",
+              padding: isMobile ? "30px" : "50px",
+            }}
+          >
+            No todos yet. Create one above!
+          </p>
         ) : (
           todos.map((todo) => (
             <div
               key={todo._id}
               style={{
-                display: 'flex',
-                justifyContent: 'space-between',
-                alignItems: 'flex-start',
-                padding: isMobile ? '15px' : '20px',
-                background: todo.completed ? '#f0f0f0' : 'white',
-                border: '2px solid #e0e0e0',
-                borderRadius: '10px',
+                display: "flex",
+                justifyContent: "space-between",
+                alignItems: "flex-start",
+                padding: isMobile ? "15px" : "20px",
+                background: todo.completed ? "#f0f0f0" : "white",
+                border: "2px solid #e0e0e0",
+                borderRadius: "10px",
                 opacity: todo.completed ? 0.6 : 1,
-                gap: isMobile ? '10px' : '15px'
+                gap: isMobile ? "10px" : "15px",
               }}
             >
-              <div style={{
-                display: 'flex',
-                gap: isMobile ? '10px' : '15px',
-                flex: 1,
-                minWidth: 0
-              }}>
+              <div
+                style={{
+                  display: "flex",
+                  gap: isMobile ? "10px" : "15px",
+                  flex: 1,
+                  minWidth: 0,
+                }}
+              >
                 <input
                   type="checkbox"
                   checked={todo.completed}
                   onChange={() => handleToggleComplete(todo)}
                   style={{
-                    width: isMobile ? '24px' : '20px',
-                    height: isMobile ? '24px' : '20px',
-                    cursor: 'pointer',
-                    marginTop: '5px',
-                    flexShrink: 0
+                    width: isMobile ? "24px" : "20px",
+                    height: isMobile ? "24px" : "20px",
+                    cursor: "pointer",
+                    marginTop: "5px",
+                    flexShrink: 0,
                   }}
                 />
                 <div style={{ flex: 1, minWidth: 0 }}>
-                  <h3 style={{
-                    fontSize: isMobile ? '1rem' : '1.2rem',
-                    marginBottom: '5px',
-                    wordBreak: 'break-word'
-                  }}>{todo.title}</h3>
-                  {todo.description && <p style={{
-                    color: '#666',
-                    marginBottom: '10px',
-                    fontSize: isMobile ? '0.85rem' : '1rem',
-                    wordBreak: 'break-word'
-                  }}>{todo.description}</p>}
-                  <div style={{
-                    display: 'flex',
-                    gap: isMobile ? '8px' : '15px',
-                    alignItems: 'center',
-                    flexWrap: 'wrap'
-                  }}>
+                  <h3
+                    style={{
+                      fontSize: isMobile ? "1rem" : "1.2rem",
+                      marginBottom: "5px",
+                      wordBreak: "break-word",
+                    }}
+                  >
+                    {todo.title}
+                  </h3>
+                  {todo.description && (
+                    <p
+                      style={{
+                        color: "#666",
+                        marginBottom: "10px",
+                        fontSize: isMobile ? "0.85rem" : "1rem",
+                        wordBreak: "break-word",
+                      }}
+                    >
+                      {todo.description}
+                    </p>
+                  )}
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: isMobile ? "8px" : "15px",
+                      alignItems: "center",
+                      flexWrap: "wrap",
+                    }}
+                  >
                     <span
                       style={{
-                        padding: isMobile ? '3px 10px' : '4px 12px',
-                        fontSize: isMobile ? '0.75rem' : '0.85rem',
-                        fontWeight: 'bold',
-                        borderRadius: '20px',
-                        textTransform: 'uppercase',
-                        background: todo.priority === 'high' ? '#ffe0e0' : todo.priority === 'medium' ? '#fff4e0' : '#e0f4ff',
-                        color: todo.priority === 'high' ? '#c0392b' : todo.priority === 'medium' ? '#e67e22' : '#3498db',
+                        padding: isMobile ? "3px 10px" : "4px 12px",
+                        fontSize: isMobile ? "0.75rem" : "0.85rem",
+                        fontWeight: "bold",
+                        borderRadius: "20px",
+                        textTransform: "uppercase",
+                        background:
+                          todo.priority === "high"
+                            ? "#ffe0e0"
+                            : todo.priority === "medium"
+                              ? "#fff4e0"
+                              : "#e0f4ff",
+                        color:
+                          todo.priority === "high"
+                            ? "#c0392b"
+                            : todo.priority === "medium"
+                              ? "#e67e22"
+                              : "#3498db",
                       }}
                     >
                       {todo.priority}
                     </span>
-                    <span style={{
-                      fontSize: isMobile ? '0.75rem' : '0.85rem',
-                      color: '#999'
-                    }}>
+                    <span
+                      style={{
+                        fontSize: isMobile ? "0.75rem" : "0.85rem",
+                        color: "#999",
+                      }}
+                    >
                       {new Date(todo.createdAt).toLocaleDateString()}
                     </span>
                   </div>
@@ -307,14 +365,14 @@ function Todos() {
                 onClick={() => handleDelete(todo._id)}
                 disabled={deleteMutation.isPending}
                 style={{
-                  background: 'none',
-                  border: 'none',
-                  fontSize: isMobile ? '1.3rem' : '1.5rem',
-                  cursor: 'pointer',
-                  padding: isMobile ? '8px' : '5px',
-                  minWidth: isMobile ? '44px' : 'auto',
-                  minHeight: isMobile ? '44px' : 'auto',
-                  flexShrink: 0
+                  background: "none",
+                  border: "none",
+                  fontSize: isMobile ? "1.3rem" : "1.5rem",
+                  cursor: "pointer",
+                  padding: isMobile ? "8px" : "5px",
+                  minWidth: isMobile ? "44px" : "auto",
+                  minHeight: isMobile ? "44px" : "auto",
+                  flexShrink: 0,
                 }}
               >
                 🗑️
@@ -324,7 +382,7 @@ function Todos() {
         )}
       </div>
     </div>
-  )
+  );
 }
 
-export default Todos
+export default Todos;
