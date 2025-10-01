@@ -47,7 +47,7 @@ npm install
 Create a `.env` file in the `backend/` directory:
 
 ```env
-PORT=5000
+PORT=5001
 MONGODB_URI=mongodb://localhost:27017/mern-tanstack-app
 NODE_ENV=development
 ```
@@ -56,7 +56,7 @@ NODE_ENV=development
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `PORT` | 5000 | Port for Express server |
+| `PORT` | 5001 | Port for Express server |
 | `MONGODB_URI` | mongodb://localhost:27017/mern-tanstack-app | MongoDB connection string |
 | `NODE_ENV` | development | Environment (development/production) |
 
@@ -70,7 +70,7 @@ For Docker deployment, use `PORT=5001` and `MONGODB_URI=mongodb://mongodb:27017/
 npm run dev
 ```
 
-Server starts on http://localhost:5000 with nodemon watching for file changes.
+Server starts on http://localhost:5001 with nodemon watching for file changes.
 
 ### Production Mode
 
@@ -82,7 +82,7 @@ npm start
 
 ### Overview
 
-Base URL: `http://localhost:5000/api`
+Base URL: `http://localhost:5001/api`
 
 | Method | Endpoint | Description | Request Body |
 |--------|----------|-------------|--------------|
@@ -217,7 +217,7 @@ import todoRoutes from './routes/todoRoutes.js';
 app.use('/api/todos', todoRoutes);
 
 // Start server
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);
 });
@@ -269,23 +269,23 @@ export const getTodos = async (req, res) => {
 
 ```bash
 # Get all todos
-curl http://localhost:5000/api/todos
+curl http://localhost:5001/api/todos
 
 # Create a todo
-curl -X POST http://localhost:5000/api/todos \
+curl -X POST http://localhost:5001/api/todos \
   -H "Content-Type: application/json" \
   -d '{"title":"Test Todo","priority":"high","description":"Test description"}'
 
 # Get single todo (replace with actual ID)
-curl http://localhost:5000/api/todos/507f1f77bcf86cd799439011
+curl http://localhost:5001/api/todos/507f1f77bcf86cd799439011
 
 # Update todo (replace with actual ID)
-curl -X PUT http://localhost:5000/api/todos/507f1f77bcf86cd799439011 \
+curl -X PUT http://localhost:5001/api/todos/507f1f77bcf86cd799439011 \
   -H "Content-Type: application/json" \
   -d '{"completed":true}'
 
 # Delete todo (replace with actual ID)
-curl -X DELETE http://localhost:5000/api/todos/507f1f77bcf86cd799439011
+curl -X DELETE http://localhost:5001/api/todos/507f1f77bcf86cd799439011
 ```
 
 ### Using MongoDB Shell
@@ -348,8 +348,8 @@ brew services start mongodb-community@7.0
 
 **Port Already in Use:**
 ```bash
-# Find process using port 5000
-lsof -i :5000
+# Find process using port 5001
+lsof -i :5001
 
 # Kill the process
 kill -9 <PID>

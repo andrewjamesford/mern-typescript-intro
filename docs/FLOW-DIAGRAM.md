@@ -58,7 +58,7 @@
                                │
 ┌──────────────────────────────▼──────────────────────────────────────┐
 │                     BACKEND (Express.js)                             │
-│  Port: 5000                                                          │
+│  Port: 5001                                                          │
 │  ┌───────────────────────────────────────────────────────────────┐ │
 │  │                      Middleware Stack                          │ │
 │  │                                                                 │ │
@@ -128,7 +128,7 @@ Step-by-Step Flow:
    ↓
 4. API SERVICE: todoApi.createTodo() makes fetch POST request
    ↓
-   POST http://localhost:5000/api/todos
+   POST http://localhost:5001/api/todos
    Headers: { Content-Type: application/json }
    Body: { title: "New Todo", description: "...", priority: "high" }
    ↓
@@ -182,7 +182,7 @@ Component Mount → Auto-fetch Flow:
       ↓
 5. API SERVICE: todoApi.getTodos()
    ↓
-   GET http://localhost:5000/api/todos
+   GET http://localhost:5001/api/todos
    ↓
 6. BACKEND: Express routes to getTodos controller
    ↓
@@ -291,7 +291,7 @@ Background Refetch (after 60 seconds):
 7. Imports models/Todo.js → Registers schema
 8. Sets up middleware (CORS, JSON parsing)
 9. Mounts routes to /api/todos
-10. Starts listening on port 5000
+10. Starts listening on port 5001
 11. Ready to accept requests
 ```
 

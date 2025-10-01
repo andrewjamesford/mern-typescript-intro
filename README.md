@@ -73,7 +73,7 @@ npm run dev
 
 **Access the application:**
 - Frontend: http://localhost:3000
-- Backend API: http://localhost:5000
+- Backend API: http://localhost:5001
 
 See [docs/QUICKSTART.md](docs/QUICKSTART.md) for step-by-step setup guide.
 

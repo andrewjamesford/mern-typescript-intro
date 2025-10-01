@@ -141,7 +141,7 @@ cd ..
 
 Backend `.env` should already exist at `backend/.env`:
 ```env
-PORT=5000
+PORT=5001
 MONGODB_URI=mongodb://localhost:27017/mern-tanstack-app
 NODE_ENV=development
 ```
@@ -178,7 +178,7 @@ npm run dev
 
 You should see:
 ```
-🚀 Server running on port 5000
+🚀 Server running on port 5001
 ✅ MongoDB Connected
 ```
 
@@ -206,10 +206,10 @@ Vinxi dev server running on http://localhost:3000
 
 ```bash
 # Get all todos
-curl http://localhost:5000/api/todos
+curl http://localhost:5001/api/todos
 
 # Create a todo
-curl -X POST http://localhost:5000/api/todos \
+curl -X POST http://localhost:5001/api/todos \
   -H "Content-Type: application/json" \
   -d '{"title":"My First Todo","priority":"high"}'
 ```
@@ -221,7 +221,7 @@ curl -X POST http://localhost:5000/api/todos \
 | Service | URL | Purpose |
 |---------|-----|---------|
 | Frontend | http://localhost:3000 | React UI (TanStack Start) |
-| Backend API | http://localhost:5000 | Express.js REST API |
+| Backend API | http://localhost:5001 | Express.js REST API |
 | MongoDB | mongodb://localhost:27017 | Database |
 
 ---
@@ -324,13 +324,13 @@ db.todos.find()
 
 ### "Address already in use"
 
-**Problem:** Port 3000, 5000, or 27017 is already in use
+**Problem:** Port 3000, 5001, or 27017 is already in use
 
 **Solution:**
 ```bash
 # Find process using the port
 lsof -i :3000
-lsof -i :5000
+lsof -i :5001
 lsof -i :27017
 
 # Kill the process

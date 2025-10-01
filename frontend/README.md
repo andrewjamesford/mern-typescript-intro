@@ -35,7 +35,7 @@ frontend/
 ### Prerequisites
 
 - Node.js v22+
-- Backend API running on port 5000 (or 5001 for Docker)
+- Backend API running on port 5001 (or 5001 for Docker)
 
 ### Start Development Server
 
@@ -125,7 +125,7 @@ The application renders on the server for:
 All API calls are centralized in `app/api/todos.js`:
 
 ```javascript
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'http://localhost:5001/api';
 
 export const todoApi = {
   getTodos: async () => {
@@ -209,7 +209,7 @@ export const router = createRouter({
 ## 🔗 Backend Integration
 
 The frontend connects to the backend API at:
-- **Local**: `http://localhost:5000/api`
+- **Local**: `http://localhost:5001/api`
 - **Docker**: `http://localhost:5001/api`
 
 Update `API_URL` in `app/api/todos.js` for different environments.

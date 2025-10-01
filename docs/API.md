@@ -5,7 +5,7 @@ Complete reference for the MERN TanStack Todo Application REST API.
 ## Base URL
 
 **Local Development:**
-- Without Docker: `http://localhost:5000/api`
+- Without Docker: `http://localhost:5001/api`
 - With Docker: `http://localhost:5001/api`
 
 **Production:**

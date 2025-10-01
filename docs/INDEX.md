@@ -206,7 +206,7 @@ cd frontend && npm run dev
 http://localhost:3000
 
 # Access API
-http://localhost:5000/api/todos
+http://localhost:5001/api/todos
 ```
 
 ## 📊 Project Stats

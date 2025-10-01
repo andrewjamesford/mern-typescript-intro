@@ -203,7 +203,7 @@ Consider adding:
 → Run `npm install` in the directory
 
 **CORS Error?**
-→ Verify backend is on port 5000
+→ Verify backend is on port 5001
 
 **Frontend Won't Start?**
 → Check for syntax errors in route files

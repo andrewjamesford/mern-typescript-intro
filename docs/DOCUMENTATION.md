@@ -168,7 +168,7 @@ mern-typescript-intro/
 
 ### Backend (.env)
 ```env
-PORT=5000
+PORT=5001
 MONGODB_URI=mongodb://localhost:27017/mern-tanstack-app
 NODE_ENV=development
 ```
@@ -176,7 +176,7 @@ NODE_ENV=development
 ### Frontend
 API URL is configured in `frontend/src/` files:
 ```javascript
-const API_URL = 'http://localhost:5000/api';
+const API_URL = 'http://localhost:5001/api';
 ```
 
 For production, use Vite environment variables (`.env` files with `VITE_` prefix).
