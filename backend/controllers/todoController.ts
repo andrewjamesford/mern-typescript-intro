@@ -1,9 +1,11 @@
+import { Request, Response } from 'express';
 import Todo from '../models/Todo.js';
+import mongoose from 'mongoose';
 
 // @desc    Get all todos
 // @route   GET /api/todos
 // @access  Public
-export const getTodos = async (req, res) => {
+export const getTodos = async (_req: Request, res: Response): Promise<void> => {
   try {
     const todos = await Todo.find().sort({ createdAt: -1 });
     res.status(200).json({
@@ -14,7 +16,7 @@ export const getTodos = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      error: error.message
+      error: (error as Error).message
     });
   }
 };
@@ -22,15 +24,16 @@ export const getTodos = async (req, res) => {
 // @desc    Get single todo
 // @route   GET /api/todos/:id
 // @access  Public
-export const getTodo = async (req, res) => {
+export const getTodo = async (req: Request, res: Response): Promise<void> => {
   try {
     const todo = await Todo.findById(req.params.id);
 
     if (!todo) {
-      return res.status(404).json({
+      res.status(404).json({
         success: false,
         error: 'Todo not found'
       });
+      return;
     }
 
     res.status(200).json({
@@ -40,7 +43,7 @@ export const getTodo = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      error: error.message
+      error: (error as Error).message
     });
   }
 };
@@ -48,7 +51,7 @@ export const getTodo = async (req, res) => {
 // @desc    Create new todo
 // @route   POST /api/todos
 // @access  Public
-export const createTodo = async (req, res) => {
+export const createTodo = async (req: Request, res: Response): Promise<void> => {
   try {
     const todo = await Todo.create(req.body);
 
@@ -57,17 +60,18 @@ export const createTodo = async (req, res) => {
       data: todo
     });
   } catch (error) {
-    if (error.name === 'ValidationError') {
+    if (error instanceof mongoose.Error.ValidationError) {
       const messages = Object.values(error.errors).map(val => val.message);
-      return res.status(400).json({
+      res.status(400).json({
         success: false,
         error: messages
       });
+      return;
     }
 
     res.status(500).json({
       success: false,
-      error: error.message
+      error: (error as Error).message
     });
   }
 };
@@ -75,7 +79,7 @@ export const createTodo = async (req, res) => {
 // @desc    Update todo
 // @route   PUT /api/todos/:id
 // @access  Public
-export const updateTodo = async (req, res) => {
+export const updateTodo = async (req: Request, res: Response): Promise<void> => {
   try {
     const todo = await Todo.findByIdAndUpdate(
       req.params.id,
@@ -87,10 +91,11 @@ export const updateTodo = async (req, res) => {
     );
 
     if (!todo) {
-      return res.status(404).json({
+      res.status(404).json({
         success: false,
         error: 'Todo not found'
       });
+      return;
     }
 
     res.status(200).json({
@@ -98,17 +103,18 @@ export const updateTodo = async (req, res) => {
       data: todo
     });
   } catch (error) {
-    if (error.name === 'ValidationError') {
+    if (error instanceof mongoose.Error.ValidationError) {
       const messages = Object.values(error.errors).map(val => val.message);
-      return res.status(400).json({
+      res.status(400).json({
         success: false,
         error: messages
       });
+      return;
     }
 
     res.status(500).json({
       success: false,
-      error: error.message
+      error: (error as Error).message
     });
   }
 };
@@ -116,15 +122,16 @@ export const updateTodo = async (req, res) => {
 // @desc    Delete todo
 // @route   DELETE /api/todos/:id
 // @access  Public
-export const deleteTodo = async (req, res) => {
+export const deleteTodo = async (req: Request, res: Response): Promise<void> => {
   try {
     const todo = await Todo.findByIdAndDelete(req.params.id);
 
     if (!todo) {
-      return res.status(404).json({
+      res.status(404).json({
         success: false,
         error: 'Todo not found'
       });
+      return;
     }
 
     res.status(200).json({
@@ -134,7 +141,7 @@ export const deleteTodo = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       success: false,
-      error: error.message
+      error: (error as Error).message
     });
   }
 };

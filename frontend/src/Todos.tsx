@@ -1,36 +1,65 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, ChangeEvent, FormEvent } from 'react'
 
 const API_URL = 'http://localhost:5001/api'
 
+type Priority = 'low' | 'medium' | 'high'
+
+interface Todo {
+  _id: string
+  title: string
+  description?: string
+  completed: boolean
+  priority: Priority
+  createdAt: string
+  updatedAt: string
+  dueDate?: string
+}
+
+interface NewTodo {
+  title: string
+  description?: string
+  priority: Priority
+}
+
+interface TodoApiResponse {
+  success: boolean
+  data: Todo | Todo[]
+  count?: number
+}
+
+interface UpdateTodoParams extends Partial<Todo> {
+  id: string
+}
+
 const todoApi = {
-  getTodos: async () => {
+  getTodos: async (): Promise<Todo[]> => {
     const response = await fetch(`${API_URL}/todos`)
     if (!response.ok) throw new Error('Failed to fetch todos')
-    const data = await response.json()
-    return data.data
+    const data: TodoApiResponse = await response.json()
+    return data.data as Todo[]
   },
-  createTodo: async (todo) => {
+  createTodo: async (todo: NewTodo): Promise<Todo> => {
     const response = await fetch(`${API_URL}/todos`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(todo),
     })
     if (!response.ok) throw new Error('Failed to create todo')
-    const data = await response.json()
-    return data.data
+    const data: TodoApiResponse = await response.json()
+    return data.data as Todo
   },
-  updateTodo: async ({ id, ...todo }) => {
+  updateTodo: async ({ id, ...todo }: UpdateTodoParams): Promise<Todo> => {
     const response = await fetch(`${API_URL}/todos/${id}`, {
       method: 'PUT',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(todo),
     })
     if (!response.ok) throw new Error('Failed to update todo')
-    const data = await response.json()
-    return data.data
+    const data: TodoApiResponse = await response.json()
+    return data.data as Todo
   },
-  deleteTodo: async (id) => {
+  deleteTodo: async (id: string): Promise<boolean> => {
     const response = await fetch(`${API_URL}/todos/${id}`, {
       method: 'DELETE',
     })
@@ -41,16 +70,16 @@ const todoApi = {
 
 function Todos() {
   const queryClient = useQueryClient()
-  const [newTodo, setNewTodo] = useState({ title: '', description: '', priority: 'medium' })
-  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+  const [newTodo, setNewTodo] = useState<NewTodo>({ title: '', description: '', priority: 'medium' })
+  const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth < 768)
 
   useEffect(() => {
-    const handleResize = () => setIsMobile(window.innerWidth < 768)
+    const handleResize = (): void => setIsMobile(window.innerWidth < 768)
     window.addEventListener('resize', handleResize)
     return () => window.removeEventListener('resize', handleResize)
   }, [])
 
-  const { data: todos = [], isLoading, error } = useQuery({
+  const { data: todos = [], isLoading, error } = useQuery<Todo[]>({
     queryKey: ['todos'],
     queryFn: todoApi.getTodos,
   })
@@ -73,18 +102,40 @@ function Todos() {
     onSuccess: () => queryClient.invalidateQueries({ queryKey: ['todos'] }),
   })
 
+  const handleSubmit = (e: FormEvent<HTMLFormElement>): void => {
+    e.preventDefault()
+    if (newTodo.title.trim()) createMutation.mutate(newTodo)
+  }
+
+  const handleTitleChange = (e: ChangeEvent<HTMLInputElement>): void => {
+    setNewTodo({ ...newTodo, title: e.target.value })
+  }
+
+  const handleDescriptionChange = (e: ChangeEvent<HTMLTextAreaElement>): void => {
+    setNewTodo({ ...newTodo, description: e.target.value })
+  }
+
+  const handlePriorityChange = (e: ChangeEvent<HTMLSelectElement>): void => {
+    setNewTodo({ ...newTodo, priority: e.target.value as Priority })
+  }
+
+  const handleToggleComplete = (todo: Todo): void => {
+    updateMutation.mutate({ ...todo, id: todo._id, completed: !todo.completed })
+  }
+
+  const handleDelete = (id: string): void => {
+    deleteMutation.mutate(id)
+  }
+
   if (isLoading) return <div style={{ textAlign: 'center', padding: '50px', color: '#667eea' }}>Loading todos...</div>
-  if (error) return <div style={{ textAlign: 'center', padding: '50px', color: '#e74c3c' }}>Error: {error.message}</div>
+  if (error) return <div style={{ textAlign: 'center', padding: '50px', color: '#e74c3c' }}>Error: {(error as Error).message}</div>
 
   return (
     <div>
       <h2 style={{ marginBottom: '30px' }}>My Todos</h2>
 
       <form
-        onSubmit={(e) => {
-          e.preventDefault()
-          if (newTodo.title.trim()) createMutation.mutate(newTodo)
-        }}
+        onSubmit={handleSubmit}
         style={{
           background: '#f7f7f7',
           padding: isMobile ? '15px' : '25px',
@@ -96,7 +147,7 @@ function Todos() {
           type="text"
           placeholder="Todo title..."
           value={newTodo.title}
-          onChange={(e) => setNewTodo({ ...newTodo, title: e.target.value })}
+          onChange={handleTitleChange}
           style={{
             width: '100%',
             padding: isMobile ? '10px' : '12px',
@@ -110,8 +161,8 @@ function Todos() {
         />
         <textarea
           placeholder="Description (optional)..."
-          value={newTodo.description}
-          onChange={(e) => setNewTodo({ ...newTodo, description: e.target.value })}
+          value={newTodo.description || ''}
+          onChange={handleDescriptionChange}
           style={{
             width: '100%',
             padding: isMobile ? '10px' : '12px',
@@ -122,7 +173,7 @@ function Todos() {
             fontFamily: 'inherit',
             boxSizing: 'border-box'
           }}
-          rows={isMobile ? "2" : "3"}
+          rows={isMobile ? 2 : 3}
         />
         <div style={{
           display: 'flex',
@@ -132,7 +183,7 @@ function Todos() {
         }}>
           <select
             value={newTodo.priority}
-            onChange={(e) => setNewTodo({ ...newTodo, priority: e.target.value })}
+            onChange={handlePriorityChange}
             style={{
               flex: isMobile ? '1 1 100%' : '1',
               padding: isMobile ? '10px' : '12px',
@@ -203,7 +254,7 @@ function Todos() {
                 <input
                   type="checkbox"
                   checked={todo.completed}
-                  onChange={() => updateMutation.mutate({ ...todo, completed: !todo.completed })}
+                  onChange={() => handleToggleComplete(todo)}
                   style={{
                     width: isMobile ? '24px' : '20px',
                     height: isMobile ? '24px' : '20px',
@@ -253,7 +304,7 @@ function Todos() {
                 </div>
               </div>
               <button
-                onClick={() => deleteMutation.mutate(todo._id)}
+                onClick={() => handleDelete(todo._id)}
                 disabled={deleteMutation.isPending}
                 style={{
                   background: 'none',

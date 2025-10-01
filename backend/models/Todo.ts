@@ -1,6 +1,16 @@
-import mongoose from 'mongoose';
+import mongoose, { Document, Schema } from 'mongoose';
 
-const todoSchema = new mongoose.Schema(
+export interface ITodo extends Document {
+  title: string;
+  description?: string;
+  completed: boolean;
+  priority: 'low' | 'medium' | 'high';
+  dueDate?: Date;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+const todoSchema = new Schema<ITodo>(
   {
     title: {
       type: String,
@@ -31,6 +41,6 @@ const todoSchema = new mongoose.Schema(
   }
 );
 
-const Todo = mongoose.model('Todo', todoSchema);
+const Todo = mongoose.model<ITodo>('Todo', todoSchema);
 
 export default Todo;
