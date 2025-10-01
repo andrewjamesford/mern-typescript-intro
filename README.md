@@ -10,7 +10,6 @@ mern-typescript-intro/
 ├── backend/           # Express.js API server
 ├── db/                # Database storage
 ├── docs/              # Detailed documentation
-├── setup.sh           # Automated setup script
 └── README.md
 ```
 
@@ -23,13 +22,39 @@ mern-typescript-intro/
 
 ## Prerequisites
 
-- Node.js (v18 or higher)
+**With Docker (Recommended):**
+- Docker and Docker Compose
+
+**Without Docker:**
+- Node.js (v22 or higher)
 - MongoDB (local installation or MongoDB Atlas account)
 - npm or yarn
 
 ## Quick Start
 
-### 1. Install Dependencies
+### Option 1: Docker Compose (Recommended)
+
+The easiest way to run the entire application:
+
+```bash
+# Start all services (MongoDB, Backend, Frontend)
+docker-compose up -d
+
+# View logs
+docker-compose logs -f
+
+# Stop all services
+docker-compose down
+```
+
+The application will be available at:
+- **Frontend**: http://localhost:3000
+- **Backend API**: http://localhost:5001
+- **MongoDB**: mongodb://localhost:27017
+
+### Option 2: Local Development
+
+#### 1. Install Dependencies
 
 ```bash
 # Install frontend dependencies
@@ -41,9 +66,9 @@ cd ../backend
 npm install
 ```
 
-### 2. Setup Environment Variables
+#### 2. Setup Environment Variables
 
-A `.env` file is already created in the `backend` directory with default values:
+Backend `.env` file is already created in `backend/` with default values:
 
 ```env
 PORT=5000
@@ -53,11 +78,11 @@ NODE_ENV=development
 
 Update as needed for your environment.
 
-### 3. Start MongoDB
+#### 3. Start MongoDB
 
 Make sure MongoDB is running on your system.
 
-### 4. Run the Application
+#### 4. Run the Application
 
 **Terminal 1 - Backend:**
 ```bash
@@ -89,8 +114,8 @@ The application will be available at:
 - TanStack Start
 - TanStack Router
 - TanStack Query
-- React 18
-- Vinxi
+- React 19
+- Vite
 
 ### Backend
 - Express.js
@@ -99,15 +124,41 @@ The application will be available at:
 - CORS
 - dotenv
 
+### Infrastructure
+- Docker & Docker Compose
+- MongoDB 7 (containerized)
+- Node.js 22 (all containers)
+
 ## Development
 
-### Frontend Development
+### Docker Development
+
+```bash
+# Start all services
+docker-compose up -d
+
+# View logs for specific service
+docker logs -f mern-frontend
+docker logs -f mern-backend
+docker logs -f mern-mongodb
+
+# Rebuild after code changes
+docker-compose build frontend
+docker-compose up -d frontend
+
+# Stop all services
+docker-compose down
+```
+
+### Local Development (Without Docker)
+
+**Frontend:**
 ```bash
 cd frontend
 npm run dev
 ```
 
-### Backend Development
+**Backend:**
 ```bash
 cd backend
 npm run dev
