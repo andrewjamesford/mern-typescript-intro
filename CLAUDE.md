@@ -4,14 +4,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-This is a MERN stack Todo application demonstrating full-stack JavaScript development with modern tooling:
-- **Frontend**: TanStack Start (React framework with SSR)
-- **Backend**: Express.js REST API
+This is a MERN stack Todo application demonstrating full-stack TypeScript development with modern tooling:
+- **Frontend**: React 19 + Vite
+- **Backend**: Express.js REST API with TypeScript
 - **Database**: MongoDB with Mongoose ODM
 - **State Management**: TanStack Query for server state
-- **Routing**: TanStack Router for file-based routing
+- **Routing**: TanStack Router (programmatic routing)
 
-Application code is organized in `backend/`, `frontend/`, and `db/` directories in the root.
+Application code is organized in `backend/` and `frontend/` directories in the root.
 
 ## Development Commands
 
@@ -23,9 +23,9 @@ npm start        # Start production server
 
 ### Frontend (from `frontend/`)
 ```bash
-npm run dev      # Start Vinxi dev server (port 3000)
+npm run dev      # Start Vite dev server (port 3000)
 npm run build    # Build for production
-npm start        # Start production server
+npm run preview  # Preview production build
 ```
 
 ### Database
@@ -42,39 +42,41 @@ mongod           # Start local MongoDB (port 27017)
 ## Architecture
 
 ### Request Flow
-1. Browser → TanStack Start Frontend (port 3000)
+1. Browser → React + Vite Frontend (port 3000)
 2. Frontend → TanStack Query manages API calls
-3. API Client (`app/api/todos.js`) → Express Backend (port 5000)
+3. Components make API calls → Express Backend (port 5000)
 4. Express Routes → Controllers → Mongoose Models
 5. MongoDB Database (todos collection)
 
 ### Frontend Structure
-- **`app/routes/`**: File-based routing
-  - `__root.jsx`: Root layout with navigation
-  - `index.jsx`: Home page (/)
-  - `todos.jsx`: Todo list page (/todos)
-  - `todos.$id.jsx`: Todo detail page (/todos/:id)
-- **`app/api/todos.js`**: API client functions (fetch wrappers)
-- **`app/router.js`**: TanStack Router configuration with QueryClient
-- **`app/client.jsx`**: Client-side entry point
-- **`app/ssr.jsx`**: Server-side rendering entry point
+- **`src/main.tsx`**: App entry point with TanStack Router and QueryClient setup
+- **`src/App.tsx`**: Root component with navigation
+- **`src/Todos.tsx`**: Todo list component with CRUD operations
+- **`src/index.css`**: Global styles
+- **`public/`**: Static assets
+
+Routes are programmatically defined in [main.tsx](frontend/src/main.tsx):
+- `/`: Home/welcome page
+- `/todos`: Todo list page
 
 ### Backend Structure
-- **`server.js`**: Express app initialization, middleware, and startup
-- **`config/db.js`**: MongoDB connection via Mongoose
-- **`models/Todo.js`**: Todo schema with validation
-- **`controllers/todoController.js`**: Business logic for CRUD operations
-- **`routes/todoRoutes.js`**: RESTful API route definitions
+- **`server.ts`**: Express app initialization, middleware, and startup
+- **`config/db.ts`**: MongoDB connection via Mongoose
+- **`models/Todo.ts`**: Todo schema with validation
+- **`controllers/todoController.ts`**: Business logic for CRUD operations
+- **`routes/todoRoutes.ts`**: RESTful API route definitions
+- **`tsconfig.json`**: TypeScript configuration
 
 ### Key Patterns
 - **TanStack Query**: All API calls use `useQuery` for reads and `useMutation` for writes
 - **Cache Invalidation**: Mutations invalidate `['todos']` query key to trigger refetch
 - **Error Handling**: Controllers use try-catch with consistent response format
-- **File-based Routing**: Routes auto-discovered from `app/routes/` directory structure
+- **Programmatic Routing**: Routes defined using TanStack Router's `createRoute` and `createRouter` APIs
+- **TypeScript**: Full type safety across both frontend and backend
 
 ## API Endpoints
 
-Base URL: `http://localhost:5000/api`
+Base URL: `http://localhost:5001/api`
 
 - `GET /todos` - List all todos
 - `GET /todos/:id` - Get single todo
@@ -100,11 +102,11 @@ MONGODB_URI=mongodb://localhost:27017/mern-tanstack-app
 NODE_ENV=development
 ```
 
-Frontend hardcodes API URL in `frontend/app/api/todos.js` (currently `http://localhost:5000/api`)
+Frontend API calls are made directly in [Todos.tsx](frontend/src/Todos.tsx) using fetch (API URL: `http://localhost:5001/api`)
 
 ## Database Schema
 
-Todo model in `models/Todo.js`:
+Todo model in [models/Todo.ts](backend/models/Todo.ts):
 ```javascript
 {
   title: String (required, max 100 chars)
@@ -120,19 +122,21 @@ Todo model in `models/Todo.js`:
 ## Common Development Tasks
 
 ### Adding a New API Endpoint
-1. Add controller function in `controllers/todoController.js`
-2. Add route in `routes/todoRoutes.js`
-3. Add API function in `frontend/app/api/todos.js`
+1. Add controller function in [controllers/todoController.ts](backend/controllers/todoController.ts)
+2. Add route in [routes/todoRoutes.ts](backend/routes/todoRoutes.ts)
+3. Add API call in component (or create a dedicated API service)
 4. Use in component with `useQuery` or `useMutation`
 
-### Adding a New Page
-1. Create file in `app/routes/` (e.g., `about.jsx`)
-2. Regenerate route tree if needed: `npm run dev` auto-generates `routeTree.gen.js`
+### Adding a New Route
+1. Define new route in [main.tsx](frontend/src/main.tsx) using `createRoute`
+2. Create component for the route
+3. Add route to the router tree with `routeTree.addChildren([...])`
 
 ### Modifying Todo Schema
-1. Update schema in `backend/models/Todo.js`
-2. Update controller validation if needed
-3. Update frontend form and display components
+1. Update schema in [backend/models/Todo.ts](backend/models/Todo.ts)
+2. Update TypeScript types if needed
+3. Update controller validation if needed
+4. Update frontend form and display components in [Todos.tsx](frontend/src/Todos.tsx)
 
 ## Testing Strategy
 
@@ -140,23 +144,23 @@ To test the full stack:
 1. Start MongoDB: `mongod`
 2. Start backend: `cd backend && npm run dev`
 3. Start frontend: `cd frontend && npm run dev`
-4. Test API directly: `curl http://localhost:5000/api/todos`
+4. Test API directly: `curl http://localhost:5001/api/todos`
 5. Test UI: Navigate to `http://localhost:3000/todos`
 
 ## Important Notes
 
-- This is a learning/demo application - not currently TypeScript despite the repo name
+- Full TypeScript implementation on both frontend and backend
 - No authentication or authorization implemented
-- Frontend uses ES modules (type: "module" in package.json)
-- Nodemon auto-restarts backend on file changes
-- Vinxi provides HMR for frontend
+- Frontend and backend both use ES modules (type: "module" in package.json)
+- Nodemon auto-restarts backend on file changes with ts-node
+- Vite provides Hot Module Replacement (HMR) for frontend
 - TanStack Query caching reduces redundant API calls
-- Route parameters use `$` prefix convention (e.g., `todos.$id.jsx` for `/todos/:id`)
+- Backend compiles TypeScript to `dist/` directory for production
 
 ## Troubleshooting
 
 **MongoDB connection errors**: Verify MongoDB is running with `mongod`
 **Port conflicts**: Change PORT in backend `.env` file
-**CORS issues**: Backend has CORS middleware enabled; verify API_URL in frontend
-**TanStack Query not updating**: Check that mutations call `queryClient.invalidateQueries(['todos'])`
-**Routes not found**: Ensure `routeTree.gen.js` is regenerated (happens automatically in dev mode)
+**CORS issues**: Backend has CORS middleware enabled; verify API URL in frontend
+**TanStack Query not updating**: Check that mutations call `queryClient.invalidateQueries({ queryKey: ['todos'] })`
+**TypeScript errors**: Run `npm run build` in backend or frontend to check for compilation errors

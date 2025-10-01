@@ -1,6 +1,6 @@
-# 📚 MERN TanStack Application - Complete Documentation Index
+# 📚 MERN TypeScript Application - Complete Documentation Index
 
-Welcome! This is your complete MERN stack application with comprehensive documentation.
+Welcome! This is your complete MERN stack application with TypeScript, built with Vite, React, and Express.js.
 
 ## 🚀 Start Here
 
@@ -28,35 +28,36 @@ Welcome! This is your complete MERN stack application with comprehensive documen
 ## 🗂️ Project Structure
 
 ```
-mern-tanstack-app/
+mern-typescript-intro-typescript/
 ├── 📘 SUMMARY.md              ⭐ START HERE - Overview & quick guide
 ├── 📘 QUICKSTART.md           🚀 5-minute setup guide
 ├── 📘 README.md               📄 Main project README
 ├── 📘 PROJECT-STRUCTURE.md    📂 File organization guide
 ├── 📘 FLOW-DIAGRAM.md         🔄 Data flow visualization
 ├── 📘 DOCUMENTATION.md        📚 Complete technical docs
-├── 🔧 setup.sh                ⚙️ Automated installation script
+├── 📘 CLAUDE.md               🤖 AI assistant project guide
 │
-├── 📁 backend/                💻 Express.js Backend
+├── 📁 backend/                💻 Express.js + TypeScript Backend
 │   ├── 📘 README.md          API documentation
 │   ├── 📄 package.json       Dependencies
-│   ├── 📄 server.js          Main entry point
+│   ├── 📄 tsconfig.json      TypeScript config
+│   ├── 📄 server.ts          Main entry point
 │   ├── 📄 .env               Configuration
-│   ├── config/db.js          MongoDB connection
-│   ├── models/Todo.js        Data schema
+│   ├── config/db.ts          MongoDB connection
+│   ├── models/Todo.ts        Data schema with types
 │   ├── controllers/          Business logic
 │   └── routes/               API endpoints
 │
-└── 📁 frontend/               ⚛️ TanStack Start Frontend
+└── 📁 frontend/               ⚛️ Vite + React + TypeScript Frontend
     ├── 📘 README.md          Frontend documentation
     ├── 📄 package.json       Dependencies
-    ├── 📄 app.config.js      TanStack config
-    └── app/
-        ├── api/todos.js      API client
-        ├── routes/           Page components
-        ├── client.jsx        Browser entry
-        ├── ssr.jsx           Server entry
-        └── router.js         Router config
+    ├── 📄 tsconfig.json      TypeScript config
+    ├── 📄 vite.config.ts     Vite configuration
+    └── src/
+        ├── main.tsx          App entry & routing
+        ├── App.tsx           Root component
+        ├── Todos.tsx         Todos page
+        └── index.css         Global styles
 ```
 
 ## 🎯 Quick Navigation
@@ -150,17 +151,18 @@ See [SUMMARY.md - Features](./SUMMARY.md#features-showcase) for details.
 ## 🔧 Tech Stack
 
 ### Frontend
-- TanStack Start 1.87.0
-- TanStack Router 1.87.0
-- TanStack Query 5.62.8
-- React 18.3.1
-- Vinxi 0.4.3
+- React 19.1.1
+- TypeScript 5.9.3
+- Vite 7.1.7
+- TanStack Router 1.132.27
+- TanStack Query 5.90.2
 
 ### Backend
 - Express.js 4.18.2
+- TypeScript 5.9.3
 - Mongoose 8.0.0
 - MongoDB
-- Node.js
+- ts-node 10.9.2
 
 See [SUMMARY.md - Tech Stack](./SUMMARY.md#tech-stack-details) for full details.
 
@@ -180,7 +182,7 @@ cd frontend && npm run dev
 http://localhost:3000
 
 # Access API
-http://localhost:5000/api/todos
+http://localhost:5001/api/todos
 ```
 
 ## 📊 Project Stats

@@ -36,11 +36,13 @@
       "Bash(git push:*)",
       "Bash(git checkout:*)",
       "mcp__chrome-devtools__fill",
-      "mcp__chrome-devtools__list_console_messages"
+      "mcp__chrome-devtools__list_console_messages",
+      "Read(//Users/andrewford/Developer/MR/Demos/**)"
     ],
     "deny": [],
     "ask": []
   },
+  "enableAllProjectMcpServers": true,
   "enabledMcpjsonServers": [
     "chrome-devtools"
   ]

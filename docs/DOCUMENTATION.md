@@ -1,13 +1,14 @@
-# MERN TanStack Application - Complete Documentation
+# MERN TypeScript Application - Complete Documentation
 
 ## Overview
 
-This is a full-stack MERN application featuring:
-- **Frontend**: TanStack Start (React framework)
-- **Backend**: Express.js REST API
+This is a full-stack MERN application with TypeScript featuring:
+- **Frontend**: Vite + React 19 + TypeScript
+- **Backend**: Express.js + TypeScript REST API
 - **Database**: MongoDB with Mongoose
 - **State Management**: TanStack Query
 - **Routing**: TanStack Router
+- **Build Tool**: Vite (frontend), tsc (backend)
 
 ## Architecture
 
@@ -15,25 +16,27 @@ This is a full-stack MERN application featuring:
 ┌─────────────────────────────────────────────────────┐
 │                   Browser/Client                     │
 │  ┌─────────────────────────────────────────────┐   │
-│  │        TanStack Start Frontend              │   │
-│  │  - React Components                         │   │
+│  │    Vite + React + TypeScript Frontend       │   │
+│  │  - React Components (TSX)                   │   │
 │  │  - TanStack Router (Routing)               │   │
 │  │  - TanStack Query (State Management)       │   │
+│  │  - Type-safe interfaces                    │   │
 │  └─────────────────────────────────────────────┘   │
 └────────────────────┬───────────────────────────────┘
                      │ HTTP Requests
-                     │ (REST API)
+                     │ (REST API - typed)
                      ▼
 ┌─────────────────────────────────────────────────────┐
-│              Express.js Backend                      │
+│          Express.js + TypeScript Backend             │
 │  ┌─────────────────────────────────────────────┐   │
 │  │  Routes → Controllers → Models              │   │
+│  │  - TypeScript types for all layers         │   │
 │  │  - CORS enabled                             │   │
 │  │  - JSON parsing                             │   │
 │  │  - Error handling                           │   │
 │  └─────────────────────────────────────────────┘   │
 └────────────────────┬───────────────────────────────┘
-                     │ Mongoose ODM
+                     │ Mongoose ODM (typed)
                      ▼
 ┌─────────────────────────────────────────────────────┐
 │                MongoDB Database                      │
@@ -48,36 +51,35 @@ This is a full-stack MERN application featuring:
 ## Project Structure
 
 ```
-mern-tanstack-app/
-├── frontend/                    # React frontend
-│   ├── app/
-│   │   ├── api/
-│   │   │   └── todos.js        # API client
-│   │   ├── routes/
-│   │   │   ├── __root.jsx      # Root layout
-│   │   │   ├── index.jsx       # Home page
-│   │   │   ├── todos.jsx       # Todos list
-│   │   │   └── todos.$id.jsx   # Todo detail
-│   │   ├── client.jsx          # Client entry
-│   │   ├── router.js           # Router config
-│   │   ├── routeTree.gen.js    # Generated routes
-│   │   └── ssr.jsx             # SSR entry
-│   ├── app.config.js           # TanStack config
-│   └── package.json
+mern-typescript-intro-typescript/
+├── frontend/                    # React + Vite frontend
+│   ├── src/
+│   │   ├── App.tsx             # Root component with navigation
+│   │   ├── main.tsx            # Entry point, router setup
+│   │   ├── Todos.tsx           # Todo list component
+│   │   ├── index.css           # Global styles
+│   │   └── assets/             # Static assets
+│   ├── public/                 # Public static files
+│   ├── vite.config.js          # Vite configuration
+│   ├── tsconfig.json           # TypeScript config
+│   ├── package.json
+│   └── README.md
 │
-├── backend/                     # Express backend
+├── backend/                     # Express + TypeScript backend
 │   ├── config/
-│   │   └── db.js               # MongoDB connection
+│   │   └── db.ts               # MongoDB connection
 │   ├── controllers/
-│   │   └── todoController.js   # Business logic
+│   │   └── todoController.ts   # Business logic
 │   ├── models/
-│   │   └── Todo.js             # Mongoose schema
+│   │   └── Todo.ts             # Mongoose schema with types
 │   ├── routes/
-│   │   └── todoRoutes.js       # API routes
-│   ├── server.js               # Express app
+│   │   └── todoRoutes.ts       # API routes
+│   ├── server.ts               # Express app
+│   ├── tsconfig.json           # TypeScript config
 │   ├── .env                    # Environment vars
 │   └── package.json
 │
+├── docs/                        # Documentation
 ├── README.md
 └── setup.sh                     # Setup script
 ```
@@ -85,16 +87,18 @@ mern-tanstack-app/
 ## Technology Stack
 
 ### Frontend
-- **React 18**: UI library
-- **TanStack Start**: Full-stack React framework
-- **TanStack Router**: Type-safe routing
-- **TanStack Query**: Server state management
-- **Vinxi**: Build tool
+- **React 19**: UI library with latest features
+- **Vite**: Fast build tool with HMR
+- **TypeScript 5.9**: Type safety
+- **TanStack Router 1.132**: Programmatic routing
+- **TanStack Query 5.90**: Server state management
 
 ### Backend
 - **Node.js**: Runtime environment
-- **Express.js**: Web framework
-- **Mongoose**: MongoDB ODM
+- **Express.js 4**: Web framework
+- **TypeScript 5.9**: Type safety
+- **Mongoose 8**: MongoDB ODM with TypeScript support
+- **ts-node**: TypeScript execution for development
 - **CORS**: Cross-origin resource sharing
 - **dotenv**: Environment configuration
 
@@ -111,11 +115,12 @@ mern-tanstack-app/
 - Loading and error states
 
 ### TanStack Router Features
-- File-based routing
+- Programmatic routing with `createRoute` and `createRouter`
 - Type-safe navigation
 - Nested layouts
 - Route parameters
 - Active link detection
+- Integration with TanStack Query
 
 ### API Features
 - RESTful design
@@ -160,17 +165,28 @@ NODE_ENV=development
 ```
 
 ### Frontend
-API URL is hardcoded in `frontend/app/api/todos.js`:
-```javascript
-const API_URL = 'http://localhost:5000/api';
+API URL is hardcoded in `frontend/src/Todos.tsx`:
+```typescript
+const API_BASE = "http://localhost:5001/api";
 ```
 
-For production, use environment variables.
+For production, use environment variables (e.g., Vite's `import.meta.env.VITE_API_URL`).
 
 ## Database Schema
 
-### Todo Model
-```javascript
+### Todo Model (backend/models/Todo.ts)
+```typescript
+interface ITodo {
+  title: string;
+  description?: string;
+  completed: boolean;
+  priority: 'low' | 'medium' | 'high';
+  dueDate?: Date;
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+// Mongoose Schema
 {
   title: {
     type: String,
@@ -238,50 +254,57 @@ Error:
 ### Making Changes
 
 **Backend Changes:**
-- Nodemon automatically restarts server
-- Check terminal for errors
+- Nodemon with ts-node automatically restarts server on TypeScript file changes
+- TypeScript compiles on the fly in development
+- Check terminal for TypeScript and runtime errors
 - Test with API client or frontend
 
 **Frontend Changes:**
-- Hot Module Replacement (HMR) updates instantly
+- Vite's Hot Module Replacement (HMR) updates instantly
+- TypeScript type-checking in real-time
 - Check browser console for errors
-- TanStack Query DevTools available
+- TanStack Query DevTools available (can be added via @tanstack/react-query-devtools)
 
 ## Common Tasks
 
 ### Adding a New Todo Field
 
-1. Update Mongoose schema (`backend/models/Todo.js`)
-2. Update API types (if using TypeScript)
-3. Update form in `frontend/app/routes/todos.jsx`
-4. Update display in components
+1. Update TypeScript interface in `backend/models/Todo.ts`
+2. Update Mongoose schema in `backend/models/Todo.ts`
+3. Update frontend Todo type in `frontend/src/Todos.tsx`
+4. Update form in `frontend/src/Todos.tsx`
+5. Update display in components
 
 ### Adding a New Route
 
-1. Create route file in `frontend/app/routes/`
-2. Update `frontend/app/routeTree.gen.js`
-3. Router automatically picks up new route
+1. Import `createRoute` in `frontend/src/main.tsx`
+2. Define new route with component
+3. Add route to the router tree with `routeTree.addChildren([...])`
+4. Update navigation in `App.tsx` if needed
 
 ### Adding a New API Endpoint
 
-1. Add controller function in `backend/controllers/`
-2. Add route in `backend/routes/`
-3. Create API function in `frontend/app/api/todos.js`
-4. Use in components with TanStack Query
+1. Add controller function in `backend/controllers/todoController.ts` with proper typing
+2. Add route in `backend/routes/todoRoutes.ts`
+3. Add API function/fetch call in `frontend/src/Todos.tsx` or create dedicated API service
+4. Use in components with TanStack Query (`useQuery` or `useMutation`)
 
 ## Deployment Considerations
 
 ### Frontend
-- Build: `npm run build`
-- Serves static files and SSR
-- Update API_URL for production backend
-- Deploy to Vercel, Netlify, or similar
+- Build: `npm run build` (creates `dist/` with static assets)
+- Preview production build: `npm run preview`
+- Update API_BASE URL for production backend (use environment variables)
+- Deploy static build to Vercel, Netlify, Cloudflare Pages, or similar
+- Configure environment variables in deployment platform
 
 ### Backend
-- Use production MongoDB (MongoDB Atlas)
+- Compile TypeScript: `npm run build` (creates `dist/` directory)
+- Start production server: `npm start` (runs compiled JavaScript)
+- Use production MongoDB (MongoDB Atlas recommended)
 - Set NODE_ENV=production
-- Use proper error handling
-- Deploy to Render, Railway, Heroku, or VPS
+- Use proper error handling and logging
+- Deploy to Render, Railway, Heroku, DigitalOcean, or VPS
 
 ### Database
 - MongoDB Atlas for cloud hosting
@@ -307,9 +330,16 @@ Error:
 - Check network tab for API calls
 
 ### Routes Not Working
-- Ensure routeTree.gen.js is updated
-- Check route file names match pattern
-- Verify router configuration
+- Check route definitions in `main.tsx`
+- Verify route paths are correct
+- Check `RouterProvider` is properly configured
+- Verify `Link` components use correct `to` paths
+
+### TypeScript Errors
+- Run `npm run build` in backend or frontend to see all errors
+- Check `tsconfig.json` settings
+- Ensure all dependencies have type definitions
+- Use `@types/*` packages for libraries without built-in types
 
 ## Best Practices
 
@@ -318,16 +348,23 @@ Error:
 3. **Optimistic Updates**: Use for instant feedback
 4. **Cache Management**: Properly invalidate queries after mutations
 5. **Validation**: Validate on both frontend and backend
-6. **Type Safety**: Consider migrating to TypeScript
+6. **Type Safety**: Leverage TypeScript across the stack - define interfaces for all data structures
 7. **Environment Variables**: Never commit `.env` files
+8. **TypeScript Strict Mode**: Consider enabling strict mode in tsconfig.json for stronger guarantees
 
 ## Next Steps
 
-- Add authentication (JWT)
+- Add authentication (JWT with TypeScript types)
 - Implement user accounts
-- Add real-time updates (Socket.io)
-- Migrate to TypeScript
-- Add unit and integration tests
-- Implement pagination
+- Add real-time updates (Socket.io with TypeScript)
+- Add unit and integration tests (Jest, Vitest, Playwright)
+- Implement pagination with proper typing
 - Add search and filters
 - Set up CI/CD pipeline
+- Add API documentation (Swagger/OpenAPI)
+- Implement proper error boundaries
+- Add TanStack Query DevTools for development
+- Enable TypeScript strict mode
+- Add proper logging (Winston, Pino)
+- Implement rate limiting
+- Add input sanitization

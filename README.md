@@ -1,13 +1,13 @@
-# MERN TanStack Start Application
+# MERN TypeScript Todo Application
 
-A full-stack MERN application using TanStack Start for the frontend, Express.js for the backend, and MongoDB for the database.
+A full-stack MERN application built with TypeScript, using Vite + React for the frontend, Express.js for the backend, and MongoDB for the database.
 
 ## Project Structure
 
 ```
-mern-typescript-intro/
-├── frontend/          # TanStack Start React application
-├── backend/           # Express.js API server
+mern-typescript-intro-typescript/
+├── frontend/          # Vite + React + TypeScript application
+├── backend/           # Express.js + TypeScript API server
 ├── db/                # Database storage
 ├── docs/              # Detailed documentation
 └── README.md
@@ -15,10 +15,11 @@ mern-typescript-intro/
 
 ## Features
 
-- **Frontend**: TanStack Start with React, TanStack Router, and TanStack Query
-- **Backend**: Express.js REST API
+- **Frontend**: Vite + React 19 + TypeScript with TanStack Router and TanStack Query
+- **Backend**: Express.js + TypeScript REST API
 - **Database**: MongoDB with Mongoose ODM
 - **CRUD Operations**: Complete Todo application
+- **Type Safety**: Full TypeScript implementation across frontend and backend
 
 ## Prerequisites
 
@@ -98,7 +99,7 @@ npm run dev
 
 The application will be available at:
 - Frontend: http://localhost:3000
-- Backend API: http://localhost:5000
+- Backend API: http://localhost:5001
 
 ## API Endpoints
 
@@ -111,23 +112,30 @@ The application will be available at:
 ## Technologies Used
 
 ### Frontend
-- TanStack Start
-- TanStack Router
-- TanStack Query
 - React 19
-- Vite
+- TypeScript 5.9
+- Vite 7
+- TanStack Router 1.132
+- TanStack Query 5.90
 
 ### Backend
-- Express.js
+- Express.js 4.18
+- TypeScript 5.9
 - MongoDB
-- Mongoose
+- Mongoose 8.0
 - CORS
 - dotenv
+- ts-node (development)
 
 ### Infrastructure
 - Docker & Docker Compose
 - MongoDB 7 (containerized)
 - Node.js 22 (all containers)
+
+### Type Safety
+- TypeScript throughout the entire stack
+- Strict type checking enabled
+- Type definitions for all dependencies
 
 ## Development
 

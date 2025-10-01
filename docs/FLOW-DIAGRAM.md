@@ -9,25 +9,25 @@
 │  │              Visit http://localhost:3000                       │ │
 │  │                                                                 │ │
 │  │  ┌────────────┐  ┌──────────────┐  ┌─────────────────────┐  │ │
-│  │  │  Home (/)  │  │ Todos (/todos)│  │ Todo Detail         │  │ │
-│  │  │            │  │               │  │ (/todos/:id)        │  │ │
-│  │  │ - Welcome  │  │ - List todos  │  │ - Full info         │  │ │
-│  │  │ - Tech     │  │ - Create form │  │ - Status            │  │ │
-│  │  │   stack    │  │ - Update      │  │ - Priority          │  │ │
-│  │  │ - CTA btn  │  │ - Delete      │  │ - Dates             │  │ │
-│  │  └────────────┘  └──────────────┘  └─────────────────────┘  │ │
+│  │  │  Home (/)  │  │ Todos (/todos)                              │  │ │
+│  │  │            │  │                                             │  │ │
+│  │  │ - Welcome  │  │ - List todos                                │  │ │
+│  │  │ - Tech     │  │ - Create form                               │  │ │
+│  │  │   stack    │  │ - Update                                    │  │ │
+│  │  │ - CTA btn  │  │ - Delete                                    │  │ │
+│  │  └────────────┘  └─────────────────────────────────────────────┘  │ │
 │  │                                                                 │ │
-│  │  TanStack Router handles navigation                            │ │
+│  │  TanStack Router handles navigation (TypeScript)               │ │
 │  └───────────────────────────────────────────────────────────────┘ │
 └─────────────────────────────────────────────────────────────────────┘
                                │
                                │ HTTP Requests (fetch API)
                                │
 ┌──────────────────────────────▼──────────────────────────────────────┐
-│                     FRONTEND (TanStack Start)                        │
+│                FRONTEND (Vite + React + TypeScript)                  │
 │  Port: 3000                                                          │
 │  ┌───────────────────────────────────────────────────────────────┐ │
-│  │                    TanStack Query Layer                        │ │
+│  │              TanStack Query Layer (Type-safe)                  │ │
 │  │                                                                 │ │
 │  │  useQuery('todos')  ────────> Fetch all todos                 │ │
 │  │  useMutation(create) ───────> Create new todo                 │ │
@@ -38,12 +38,13 @@
 │  │  • Automatic caching                                           │ │
 │  │  • Background refetching                                       │ │
 │  │  • Optimistic updates                                          │ │
+│  │  • TypeScript type safety                                      │ │
 │  │  • Loading states                                              │ │
 │  │  • Error handling                                              │ │
 │  └───────────────────────────────────────────────────────────────┘ │
 │  ┌───────────────────────────────────────────────────────────────┐ │
-│  │                    API Service Layer                           │ │
-│  │                    (app/api/todos.js)                          │ │
+│  │                    API Client Functions                        │ │
+│  │                    (Todos.tsx - inline)                        │ │
 │  │                                                                 │ │
 │  │  • getTodos()    → GET  /api/todos                            │ │
 │  │  • getTodo(id)   → GET  /api/todos/:id                        │ │
@@ -128,7 +129,7 @@ Step-by-Step Flow:
    ↓
 4. API SERVICE: todoApi.createTodo() makes fetch POST request
    ↓
-   POST http://localhost:5000/api/todos
+   POST http://localhost:5001/api/todos
    Headers: { Content-Type: application/json }
    Body: { title: "New Todo", description: "...", priority: "high" }
    ↓
@@ -182,7 +183,7 @@ Component Mount → Auto-fetch Flow:
       ↓
 5. API SERVICE: todoApi.getTodos()
    ↓
-   GET http://localhost:5000/api/todos
+   GET http://localhost:5001/api/todos
    ↓
 6. BACKEND: Express routes to getTodos controller
    ↓
