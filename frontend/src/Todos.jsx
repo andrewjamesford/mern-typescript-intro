@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 
 const API_URL = 'http://localhost:5001/api'
 
@@ -42,6 +42,13 @@ const todoApi = {
 function Todos() {
   const queryClient = useQueryClient()
   const [newTodo, setNewTodo] = useState({ title: '', description: '', priority: 'medium' })
+  const [isMobile, setIsMobile] = useState(window.innerWidth < 768)
+
+  useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth < 768)
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   const { data: todos = [], isLoading, error } = useQuery({
     queryKey: ['todos'],
@@ -78,28 +85,62 @@ function Todos() {
           e.preventDefault()
           if (newTodo.title.trim()) createMutation.mutate(newTodo)
         }}
-        style={{ background: '#f7f7f7', padding: '25px', borderRadius: '10px', marginBottom: '30px' }}
+        style={{
+          background: '#f7f7f7',
+          padding: isMobile ? '15px' : '25px',
+          borderRadius: '10px',
+          marginBottom: isMobile ? '20px' : '30px'
+        }}
       >
         <input
           type="text"
           placeholder="Todo title..."
           value={newTodo.title}
           onChange={(e) => setNewTodo({ ...newTodo, title: e.target.value })}
-          style={{ width: '100%', padding: '12px', fontSize: '1rem', border: '2px solid #ddd', borderRadius: '6px', marginBottom: '15px' }}
+          style={{
+            width: '100%',
+            padding: isMobile ? '10px' : '12px',
+            fontSize: isMobile ? '0.9rem' : '1rem',
+            border: '2px solid #ddd',
+            borderRadius: '6px',
+            marginBottom: '15px',
+            boxSizing: 'border-box'
+          }}
           required
         />
         <textarea
           placeholder="Description (optional)..."
           value={newTodo.description}
           onChange={(e) => setNewTodo({ ...newTodo, description: e.target.value })}
-          style={{ width: '100%', padding: '12px', fontSize: '1rem', border: '2px solid #ddd', borderRadius: '6px', marginBottom: '15px', fontFamily: 'inherit' }}
-          rows="3"
+          style={{
+            width: '100%',
+            padding: isMobile ? '10px' : '12px',
+            fontSize: isMobile ? '0.9rem' : '1rem',
+            border: '2px solid #ddd',
+            borderRadius: '6px',
+            marginBottom: '15px',
+            fontFamily: 'inherit',
+            boxSizing: 'border-box'
+          }}
+          rows={isMobile ? "2" : "3"}
         />
-        <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
+        <div style={{
+          display: 'flex',
+          gap: isMobile ? '10px' : '15px',
+          alignItems: 'center',
+          flexWrap: 'wrap'
+        }}>
           <select
             value={newTodo.priority}
             onChange={(e) => setNewTodo({ ...newTodo, priority: e.target.value })}
-            style={{ flex: 1, padding: '12px', fontSize: '1rem', border: '2px solid #ddd', borderRadius: '6px' }}
+            style={{
+              flex: isMobile ? '1 1 100%' : '1',
+              padding: isMobile ? '10px' : '12px',
+              fontSize: isMobile ? '0.9rem' : '1rem',
+              border: '2px solid #ddd',
+              borderRadius: '6px',
+              boxSizing: 'border-box'
+            }}
           >
             <option value="low">Low Priority</option>
             <option value="medium">Medium Priority</option>
@@ -108,16 +149,35 @@ function Todos() {
           <button
             type="submit"
             disabled={createMutation.isPending}
-            style={{ padding: '12px 30px', fontSize: '1rem', fontWeight: 'bold', color: 'white', background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', border: 'none', borderRadius: '6px', cursor: 'pointer' }}
+            style={{
+              flex: isMobile ? '1 1 100%' : '0 0 auto',
+              padding: isMobile ? '12px 20px' : '12px 30px',
+              fontSize: isMobile ? '0.9rem' : '1rem',
+              fontWeight: 'bold',
+              color: 'white',
+              background: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)',
+              border: 'none',
+              borderRadius: '6px',
+              cursor: 'pointer',
+              minHeight: '44px'
+            }}
           >
             {createMutation.isPending ? 'Adding...' : 'Add Todo'}
           </button>
         </div>
       </form>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '15px' }}>
+      <div style={{
+        display: 'flex',
+        flexDirection: 'column',
+        gap: isMobile ? '10px' : '15px'
+      }}>
         {todos.length === 0 ? (
-          <p style={{ textAlign: 'center', color: '#999', padding: '50px' }}>No todos yet. Create one above!</p>
+          <p style={{
+            textAlign: 'center',
+            color: '#999',
+            padding: isMobile ? '30px' : '50px'
+          }}>No todos yet. Create one above!</p>
         ) : (
           todos.map((todo) => (
             <div
@@ -126,28 +186,54 @@ function Todos() {
                 display: 'flex',
                 justifyContent: 'space-between',
                 alignItems: 'flex-start',
-                padding: '20px',
+                padding: isMobile ? '15px' : '20px',
                 background: todo.completed ? '#f0f0f0' : 'white',
                 border: '2px solid #e0e0e0',
                 borderRadius: '10px',
                 opacity: todo.completed ? 0.6 : 1,
+                gap: isMobile ? '10px' : '15px'
               }}
             >
-              <div style={{ display: 'flex', gap: '15px', flex: 1 }}>
+              <div style={{
+                display: 'flex',
+                gap: isMobile ? '10px' : '15px',
+                flex: 1,
+                minWidth: 0
+              }}>
                 <input
                   type="checkbox"
                   checked={todo.completed}
                   onChange={() => updateMutation.mutate({ ...todo, completed: !todo.completed })}
-                  style={{ width: '20px', height: '20px', cursor: 'pointer', marginTop: '5px' }}
+                  style={{
+                    width: isMobile ? '24px' : '20px',
+                    height: isMobile ? '24px' : '20px',
+                    cursor: 'pointer',
+                    marginTop: '5px',
+                    flexShrink: 0
+                  }}
                 />
-                <div style={{ flex: 1 }}>
-                  <h3 style={{ fontSize: '1.2rem', marginBottom: '5px' }}>{todo.title}</h3>
-                  {todo.description && <p style={{ color: '#666', marginBottom: '10px' }}>{todo.description}</p>}
-                  <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
+                <div style={{ flex: 1, minWidth: 0 }}>
+                  <h3 style={{
+                    fontSize: isMobile ? '1rem' : '1.2rem',
+                    marginBottom: '5px',
+                    wordBreak: 'break-word'
+                  }}>{todo.title}</h3>
+                  {todo.description && <p style={{
+                    color: '#666',
+                    marginBottom: '10px',
+                    fontSize: isMobile ? '0.85rem' : '1rem',
+                    wordBreak: 'break-word'
+                  }}>{todo.description}</p>}
+                  <div style={{
+                    display: 'flex',
+                    gap: isMobile ? '8px' : '15px',
+                    alignItems: 'center',
+                    flexWrap: 'wrap'
+                  }}>
                     <span
                       style={{
-                        padding: '4px 12px',
-                        fontSize: '0.85rem',
+                        padding: isMobile ? '3px 10px' : '4px 12px',
+                        fontSize: isMobile ? '0.75rem' : '0.85rem',
                         fontWeight: 'bold',
                         borderRadius: '20px',
                         textTransform: 'uppercase',
@@ -157,7 +243,10 @@ function Todos() {
                     >
                       {todo.priority}
                     </span>
-                    <span style={{ fontSize: '0.85rem', color: '#999' }}>
+                    <span style={{
+                      fontSize: isMobile ? '0.75rem' : '0.85rem',
+                      color: '#999'
+                    }}>
                       {new Date(todo.createdAt).toLocaleDateString()}
                     </span>
                   </div>
@@ -166,7 +255,16 @@ function Todos() {
               <button
                 onClick={() => deleteMutation.mutate(todo._id)}
                 disabled={deleteMutation.isPending}
-                style={{ background: 'none', border: 'none', fontSize: '1.5rem', cursor: 'pointer', padding: '5px' }}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  fontSize: isMobile ? '1.3rem' : '1.5rem',
+                  cursor: 'pointer',
+                  padding: isMobile ? '8px' : '5px',
+                  minWidth: isMobile ? '44px' : 'auto',
+                  minHeight: isMobile ? '44px' : 'auto',
+                  flexShrink: 0
+                }}
               >
                 🗑️
               </button>
