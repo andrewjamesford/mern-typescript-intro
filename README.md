@@ -1,10 +1,9 @@
 # MERN TanStack Start Todo Application
 
-A modern full-stack MERN application demonstrating best practices with TanStack Start (React SSR framework), Express.js REST API, and MongoDB database. Features Docker-first deployment, TypeScript-ready architecture, and comprehensive documentation.
+A modern full-stack MERN application demonstrating best practices with Vite, React, Express.js REST API, and MongoDB database. Features Docker-first deployment, TypeScript-ready architecture, and comprehensive documentation.
 
 ## ✨ Features
 
-- 🚀 **TanStack Start** - Full-stack React framework with SSR
 - 🔄 **TanStack Router** - File-based routing with type safety
 - 📊 **TanStack Query** - Powerful server state management with caching
 - 🎨 **Modern UI** - Responsive design with inline styles
@@ -17,28 +16,12 @@ A modern full-stack MERN application demonstrating best practices with TanStack 
 
 ```
 mern-typescript-intro/
-├── frontend/          # TanStack Start React application
-│   ├── app/          # Application source code
-│   │   ├── routes/   # File-based routing pages
-│   │   ├── api/      # API client functions
-│   │   └── ...       # Client/SSR entry points
-│   └── package.json
-├── backend/           # Express.js API server
-│   ├── config/       # Configuration (DB connection)
-│   ├── controllers/  # Business logic
-│   ├── models/       # Mongoose schemas
-│   ├── routes/       # API route definitions
-│   └── server.js     # Express app entry point
-├── db/                # MongoDB data directory
-├── docs/              # Comprehensive documentation
-│   ├── INDEX.md      # Documentation index
-│   ├── API.md        # API reference
-│   ├── DOCKER.md     # Docker guide
-│   └── ...
-└── docker-compose.yml # Multi-container setup
+├── frontend/          # Vite + React + TypeScript application
+├── backend/           # Express.js + TypeScript API server
+├── db/                # Database storage
+├── docs/              # Detailed documentation
+└── README.md
 ```
-
-See [docs/PROJECT-STRUCTURE.md](docs/PROJECT-STRUCTURE.md) for detailed file descriptions.
 
 ## 🚀 Quick Start
 
@@ -123,18 +106,18 @@ See [docs/API.md](docs/API.md) for detailed API documentation with examples.
 ## 🛠️ Technology Stack
 
 ### Frontend
-- **TanStack Start 1.87+** - Full-stack React framework
-- **TanStack Router 1.87+** - File-based routing
-- **TanStack Query 5.62+** - Server state management
-- **React 19** - UI library
-- **Vinxi** - Build tool
+- React 19
+- TypeScript 5.9
+- Vite 7
+- TanStack Router 1.132
+- TanStack Query 5.90
 
 ### Backend
-- **Express.js 4.18+** - Web framework
-- **Mongoose 8.0+** - MongoDB ODM
-- **Node.js 22** - Runtime environment
-- **CORS** - Cross-origin support
-- **dotenv** - Environment configuration
+- Express.js 4.18
+- MongoDB
+- Mongoose 8.0
+- CORS
+- dotenv
 
 ### Infrastructure
 - **Docker** - Containerization
@@ -224,9 +207,8 @@ See [docs/DOCKER.md](docs/DOCKER.md) for more troubleshooting tips.
 
 This project demonstrates:
 - ✅ MERN stack architecture
-- ✅ TanStack ecosystem (Start, Router, Query)
+- ✅ TanStack ecosystem (Router, Query)
 - ✅ RESTful API design
-- ✅ React Server-Side Rendering (SSR)
 - ✅ Docker containerization
 - ✅ MongoDB schema design
 - ✅ State management with TanStack Query
