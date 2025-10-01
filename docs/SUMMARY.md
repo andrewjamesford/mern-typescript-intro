@@ -151,12 +151,11 @@ This project is ideal for:
 2. **MVC Pattern** - Models, Controllers, Routes separation
 3. **React Hooks** - useState, useQuery, useMutation
 4. **Server State** - TanStack Query caching and updates
-5. **Client Routing** - File-based TanStack Router
-6. **SSR** - Server-side rendering with TanStack Start
-7. **Error Handling** - Both frontend and backend
-8. **Data Validation** - Mongoose schemas and validators
-9. **CORS** - Cross-origin resource sharing
-10. **Environment Config** - dotenv usage
+5. **Client Routing** - TanStack Router
+6. **Error Handling** - Both frontend and backend
+7. **Data Validation** - Mongoose schemas and validators
+8. **CORS** - Cross-origin resource sharing
+9. **Environment Config** - dotenv usage
 
 ## 🚧 Next Steps / Extensions
 
